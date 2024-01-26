@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Navadmin from '../../components/navadmin/Navadmin'
+import './newmembers.css'
 
 export default function Newmembers() {
     const [Avocats, setAvocats] = useState([
@@ -43,11 +44,11 @@ export default function Newmembers() {
                             <td>{item.id}</td>
                             <td>{item.name}</td>
                             <td> 
-                            <button onClick={() => handelconfirmation(item.id)}>
+                            <button className='bout1' onClick={() => handelconfirmation(item.id)}>
                                 {item.confirmed ? 'Confirmé' : 'confirmer'}
                             </button> 
                         </td>
-                            <td> <button className='newbout' >Supprimer</button> </td>
+                            <td> <button className='bout2' >Supprimer</button> </td>
                         </tr>
                     ))}   
                 </tbody>

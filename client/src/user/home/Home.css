@@ -137,3 +137,8 @@ background-color: black;
     text-align: center;
     margin: 20px 10%  ;
 }
+@media only screen  and (max-width: 800px) {
+    .homecontent>.header>.research-section>.firstsection>.formm {
+        flex-wrap: wrap;
+    }
+  }

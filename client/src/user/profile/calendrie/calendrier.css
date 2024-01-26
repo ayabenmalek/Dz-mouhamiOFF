@@ -103,6 +103,9 @@
     margin-top: 25px;
     width: 59%;
 }
+.prendrerdv:hover{
+  background-color: #d9a463cc;
+}
 .tableuxcal{
     display: flex;
     align-items: center;
@@ -164,9 +167,10 @@
     color: black;
   }
   .notchecked:hover{
-    background: #043C55;
+    background: #D9A363;
   }
   .react-calendar button{
     background-color: #004665;
     border-radius: 57px;
   }
+ 

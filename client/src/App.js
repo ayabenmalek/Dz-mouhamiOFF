@@ -13,6 +13,7 @@ import Rnvd from './avocat/Vosrndv/Rnvd';
 import Homeavocat from './avocat/home/Home'
 import Profile from './user/profile/Profile';
 import Planification from './avocat/planification/Planification';
+import Loginadmin from './admin/loginadmin/loginadmin'
 
 class App extends Component {
   render() {
@@ -24,12 +25,13 @@ class App extends Component {
                     <Route path="/Signup" element={<Signup />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/Result" element={<Result />} />
-                    <Route path="/Allmembers" element={<Allmembers />} />
-                    <Route path="/Newmembers" element={<Newmembers />} />
+                    <Route path="/admin/Allmembers" element={<Allmembers />} />
+                    <Route path="/admin/Newmembers" element={<Newmembers />} />
                     <Route path="/avocat" element={<Homeavocat/>} />
                     <Route path="/avocat/rdv" element={<Rnvd/>} />
                     <Route path="/user/profile" element={<Profile/>} />
                     <Route path="/planification" element={<Planification/>} />
+                    <Route path="/Loginadmin" element={<Loginadmin/>} />
             </Routes>
           
         </section>

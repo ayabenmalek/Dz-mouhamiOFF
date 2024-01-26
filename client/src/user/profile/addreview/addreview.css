@@ -51,3 +51,6 @@
     align-items: center;
     color: white;
 }
+.buttonadd:hover{
+    background-color: #043b55c1;
+}

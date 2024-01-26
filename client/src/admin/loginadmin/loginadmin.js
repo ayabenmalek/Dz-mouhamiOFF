@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate }  from 'react-router-dom';
 import law from './truth-concept-arrangement-with-balance 1.png'
-import './login.css'
+import './loginadmin.css'
 import google from './Frame 50.png'
 import axios from 'axios'
 
 
 
 
-export default function Login() {
+export default function Loginadmin() {
     const navigate = useNavigate  ();
     
     const redirectToSignup = () => {
@@ -32,7 +32,7 @@ export default function Login() {
     return (
         <div className='logincontent'>
             <div className='login-title'>
-                <h1>Bienvenue dans <span>DZ-Mouhami</span> </h1>
+                <h1>Bienvenue notre admin dans <span>DZ-Mouhami</span> </h1>
             </div>
             <div className='login-contentt'>
                 <div className='left' >
@@ -40,7 +40,6 @@ export default function Login() {
                 </div>
                 <div className='right'>
                     <form>
-                       
                         <input type='text' placeholder="Nom d\'utilisateur"  onChange={(e) => setusername(e.target.value)}></input>
                         <input type='password' placeholder="Mot de passe" onChange={(e) => setpassword(e.target.value)}></input>
                         <button >Connexion</button>

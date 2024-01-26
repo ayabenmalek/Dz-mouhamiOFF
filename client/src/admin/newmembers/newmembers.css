@@ -1,0 +1,70 @@
+.newcontent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 200px;
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-right: 100px;
+    background-color: rgba(60, 61, 61, 0.69);
+}
+.newcontent>.newcontetnt-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 50px;
+    align-items: center;
+    margin-right: 55%;
+
+}
+.newcontent>.newcontetnt-title>h2{
+    font-family: 'Montserat';
+    font-size: 30px;
+    color: white;
+    
+}
+.newcontent>.newcontetnt-title>div{
+    width: 15px;
+    height:30px ;
+    border-radius: 10px;
+    background-color: #D9A363;
+    align-items: center;
+}
+.newcontent>table{
+    width: 80%;
+}
+.newcontent>table>tbody>tr>td,.newcontent>table>thead>tr>th {
+    font-size: 20px;
+    text-align: left;
+    font-family: 'Montserat';
+    padding: 10px 0px 10px 0px;
+}
+.newcontent>table>thead>tr>th {
+    color: #BABABA;
+}
+.newcontent>table>tbody>tr>td {
+    color: white;
+}
+.newcontent>table>tbody>tr>td>.bout1 {
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    font-size: 18px;
+    color: #FF0000;
+    border-radius: 20px;
+    padding: 7px 13px 7px 13px;
+    background-color: transparent;
+}
+.newcontent>table>tbody>tr>td>.bout2{
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    font-size: 18px;
+    color: #00ff08;
+    border-radius: 20px;
+    padding: 7px 13px 7px 13px;
+    background-color: transparent;
+}
+.newcontent>table>tbody>tr>td>button:hover{
+    cursor: pointer;
+}
+
