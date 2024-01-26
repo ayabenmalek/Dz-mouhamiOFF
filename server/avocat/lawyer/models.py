@@ -16,11 +16,13 @@ class Avocat(AbstractUser):
     adressar = models.CharField(max_length=255)
 
     # Step 3
-    cv = models.TextField()
+    cv = models.BinaryField(null=True, blank=True)
     experience = models.TextField()
     detail = models.TextField()
     setSelectedOptions = models.TextField()
     selected_dates = models.TextField(blank=True)
+    confirm = models.BooleanField(null=True, blank=True)
+    star = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.username
