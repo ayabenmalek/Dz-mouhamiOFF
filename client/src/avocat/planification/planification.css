@@ -1,0 +1,34 @@
+.planificationcontainer{
+    background-color: black;
+    height: 99vh;   
+}
+.calendercontainer{
+    height: 405px;
+    width: 32%;
+}
+.calcontain{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.planificationtransition1{
+    gap: 23px;
+}
+.textplanplan{
+    padding: 10px 43px !important;
+}
+
+.souscalendrierplanification{
+    justify-content: center;
+    margin-top: 0; 
+    margin-left: 0;
+}
+.textplan{
+    display: flex;
+    padding: 15px 48px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    background: #D9A363;
+}

@@ -1,0 +1,128 @@
+.leftcontainer{
+    display: flex;
+    padding: 25px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    border-radius: 16px;
+    background: rgba(60, 61, 61, 0.70);
+    /* height: 537px; */
+    overflow-y: scroll;
+}
+.left{
+    
+    width: calc((100% / 2) - 20px); 
+}
+::-webkit-scrollbar {
+    width: 2px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 3px;
+
+  }
+.leftcontainer .titlerndv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.leftcontainer .titlerndv h1{
+    font-size: 24px;
+    color: white;   
+    padding-left: 0px;
+    margin: 0px;
+}
+.leftcontainer .titlerndv .h1{
+    height: 33px;
+}
+/* .leftcontainer .titlerndv h1::before{
+    content: '';
+    display: block;
+    width: 8px;
+    height: 33px;
+    border-radius: 16px;
+    background: #D9A363;
+    transform: translate(-18px, 30px);
+    margin: -33px 0px 0px 0px;
+} */
+.leftcontainer .titlerndv .bare{
+    content: '';
+    display: block;
+    width: 8px;
+    height: 33px;
+    border-radius: 16px;
+    background: #D9A363;
+    transform: translate(-18px, 30px);
+    margin: -33px 0px 0px 0px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .thead{
+    color: #BABABA;
+  }
+.trspecial{
+    display: flex;
+    gap: 64px;
+    width: 384px;
+    margin-left: 17px;
+}
+.action{
+    margin-left: -45px;
+}
+.table th{
+    color: #BABABA;
+    font-weight: normal;
+}
+
+.table .td{
+    color: white;
+    
+    padding: 10px 15px 10px 15px;
+}
+
+.table .border{
+    border-bottom: 1px solid #BABABA;
+    /* display: block; */
+    padding: 11px;
+    width: 384px;
+    display: flex;
+  }
+.table .noborder{
+    border: 0px;
+    display: flex;
+    padding: 11px;
+    width: 384px;
+}
+
+.table .trcontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pasderdv{
+    display: flex;
+    height: 53vh;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 37px;
+    font-weight: bold;
+}
+.table button{
+    background: transparent;
+    border: 0px;
+    color: #D9A363;
+    font-size: 16px;
+    cursor: pointer;
+}
+.nom{
+    width: 174px;
+}

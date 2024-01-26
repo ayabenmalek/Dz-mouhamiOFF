@@ -1,0 +1,20 @@
+{
+    "home": "acceuille",
+    "contact": "Contact",
+    "welcome_user": "{username}",
+    "appointments": "Vos RDV",
+    "appointment_planning": "Planification RDV",
+    "settings": "Settings",
+    "logout": "Logout",
+    "language": "FR",
+    "toggle_language": "ع",
+    "bienvenue" : "Bienvenue dans votre site ",
+    "muhamy" : "DZ-Mouhami",
+    "pasderndv" : "Pas de rendez'vous pour le moment",
+    "rdv" : "Vos rendez-vous",
+    "selectionner" : "le client selectionner",
+    "nom" : "Nom du client",
+    "id" : "id client",
+    "action" : "action"
+  }
+  

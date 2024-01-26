@@ -1,0 +1,59 @@
+.profilcontainer{
+    background-color: black;
+    height: fit-content;
+    /* width: 90%; */
+    display: flex;
+    flex-direction: column;
+    padding: 0px 33px;
+    gap: 65px;
+
+
+}
+.profilcontainer .profilehaut{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 77px;
+}
+.bascontainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bascontainer .bas{
+    width: 95%;
+    background: rgba(60, 61, 61, 0.70);
+    display: flex;
+    flex-direction: column;
+    min-height: 501px;
+    padding: 16px 34px;
+    border-radius: 16px;
+    align-items: center;
+}
+.bascontainer .bas .titles{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 44px;
+
+}
+.bascontainer .bas .titles button{
+    background: transparent;
+    border: 0px;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.bas hr{
+    width: 91px;
+   
+}
+.transition-hr {
+    transition: transform 1s ease; /* Adjust the duration and timing function as needed */
+  }
+.content{
+    width: 100%;
+}

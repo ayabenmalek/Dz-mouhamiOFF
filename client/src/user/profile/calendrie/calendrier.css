@@ -1,0 +1,172 @@
+.calendarconatiner{
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 40%;
+    border-radius: 16px;
+    background: rgba(60, 61, 61, 0.70);
+    padding: 13px 34px;
+    gap: 10px;
+}
+.calendarconatiner .title{
+    width: 100%;
+    padding: 13px 0px;
+}
+.calendarconatiner .title h1{
+    font-size: 24px;
+    color: white;   
+    padding-left: 25px;
+}
+
+.calendarconatiner .title ::before{
+    content: '';
+    display: block;
+    width: 8px;
+    height: 33px;
+    border-radius: 16px;
+    background: #D9A363;
+    transform: translate(-18px, 30px);
+    margin: -33px 0px 0px 0px;
+}
+
+
+/* Customize the overall appearance */
+.react-calendar {
+    background-color: black;
+    color: white;
+    border-radius: 12px;
+  }
+  
+  /* Customize the appearance of enabled (clickable) dates */
+  .react-calendar__tile--active {
+    background-color: rgba(0, 70, 101, 0.50);
+    /* box-shadow: 0px 0px 27px 0px rgba(0, 70, 101, 0.50); */
+  }
+  
+  /* Hide the navigation panel */
+  .react-calendar__navigation {
+    display: none;
+  }
+
+/* .react-calendar__month-view__days{
+    /* background-color: black; */
+    /* color: white; */
+/* }  */
+.react-calendar__tile:disabled {
+    background-color: black;
+}
+.react-calendar button{
+    background-color:#004665 ;
+    border-radius: 5px;
+    color: white;
+}
+.react-calendar button:checked{
+    background-color:#D9A363 ;
+}
+.react-calendar *{
+    text-decoration: none;
+}
+.react-calendar {
+    background-color: black;
+    color: white;
+    border-radius: 12px;
+    height: 234px;
+    padding: 7px;
+    overflow: hidden;
+}
+.souscalendrier {
+    width: 100%;
+    display: flex;
+    margin-top: 24px;
+    margin-left: 9%;
+    color: white;
+}
+.dispo {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+.bleu{
+    border-radius: 5px;
+    background: #004665;
+    width: 40px;
+    height: 40px;
+}
+.prendrerdv{
+    border-radius: 12px;
+    background: #D9A363;
+    display: flex;
+    padding: 12px 48px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    width: 59%;
+}
+.tableuxcal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.prendrecontainer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.transition1{
+    display: flex;
+    flex-direction: column;
+}
+
+/* CustomRadioButton.css */
+
+.custom-radio-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .custom-radio-label input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .styled-div {
+    padding: 10px;
+    margin-top: 10px;
+    /* background-color: ${props => props.checked ? 'green' : 'red'}; */
+  }
+.transition2{
+    flex-wrap: wrap;
+    gap: 21px;
+    height: 232px;
+    justify-content: center;
+    padding-top: 37px;
+}
+  .heurebutton{
+    cursor: pointer;
+    width: 76px;
+    height: 43px;
+    border-radius: 12px;
+    border: 2px solid #D9A363;
+    background: rgba(217, 217, 217, 0.00);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+  }
+  .transition2 .checked{
+    background-color: #D9A363;
+    cursor: default;
+    color: black;
+  }
+  .notchecked:hover{
+    background: #043C55;
+  }
+  .react-calendar button{
+    background-color: #004665;
+    border-radius: 57px;
+  }

@@ -1,0 +1,139 @@
+body{
+background-color: black;
+}
+.homecontent>.header>.head{
+    background-image: url(./header.png);
+    width: 100vw;
+    height: 600px;
+    margin-bottom: 50px;
+
+}
+.homecontent>.header>.head>.home-title{
+    font-family: 'Lemon', sans-serif;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+.homecontent>.header>.head>.home-title>span{
+    font-family: 'Lemon', sans-serif;
+    color: #D9A363;
+}
+.homecontent>.header>.research-section{
+    background-color: rgba(217, 164, 99, 0.8);
+    padding: 30px;
+    border-radius: 20px;
+    margin: 0px 5% 0px 5%;
+    position: absolute;
+    top: 280px;
+    width: 85%;
+}
+.homecontent>.header>.research-section>.firstsection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.homecontent>.header>.research-section>.firstsection>.formm{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    
+}
+.homecontent>.header>.research-section>.firstsection>.formm>button{
+    font-family: 'Inter', sans-serif;
+    border: none;
+    font-size: 18px;
+    color: white;
+    border-radius: 12px;
+    padding: 7px 15px 7px 15px;
+    background-color: #043C55;
+    
+}
+.homecontent>.header>.research-section>.firstsection>.formm>button:hover{
+    cursor: pointer;
+    background-color: #043b55ab;
+    
+}
+
+  
+  
+.research-section>.firstsection>.formm>select{
+    font-family: 'Montserrat';
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+}
+.research-section>.firstsection>p{
+    font-family: 'Montserrat';
+    font-size: 22px;
+    color: white;
+}
+.research-section>.secondsection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.research-section>.secondsection>p{
+    font-family: 'Montserrat';
+    font-size: 22px;
+    color: white;
+}
+.research-section>.secondsection>.formm2{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.homecontent>.header>.research-section>.secondsection>.formm2>button{
+  font-family: 'Inter', sans-serif;
+  border: none;
+  font-size: 18px;
+  color: white;
+  border-radius: 12px;
+  padding: 7px 15px 7px 15px;
+  background-color: #043C55;
+  
+}
+.homecontent>.header>.research-section>.secondsection>.formm2>input{
+  font-family: 'Montserrat';
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+  
+}
+.homecontent>.header>.research-section>.secondsection>.formm2>button:hover{
+  cursor: pointer;
+  background-color: #043b55ab;
+  
+}
+.avopop{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.avopop>h1{
+    color: white;
+    font-family:'Lemon', sans-serif; 
+    font-size: 25px;
+
+}
+.apropos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.apropos>h1{
+    color: white;
+    font-family:'Lemon', sans-serif; 
+    font-size: 25px;
+
+}
+.apropos>p{
+    font-family: 'Inter';
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    margin: 20px 10%  ;
+}

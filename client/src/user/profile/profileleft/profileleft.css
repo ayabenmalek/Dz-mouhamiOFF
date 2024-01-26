@@ -1,0 +1,131 @@
+.profileleftcontainer{
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 40%;
+    border-radius: 16px;
+    background: rgba(60, 61, 61, 0.70);
+    padding: 13px 34px;
+
+}
+
+.profileleftcontainer .title{
+    width: 100%;
+    padding: 13px 0px;
+}
+.profileleftcontainer .title h1{
+    font-size: 24px;
+    color: white;   
+    padding-left: 25px;
+}
+
+.profileleftcontainer .title ::before{
+    content: '';
+    display: block;
+    width: 8px;
+    height: 33px;
+    border-radius: 16px;
+    background: #D9A363;
+    transform: translate(-18px, 30px);
+    margin: -33px 0px 0px 0px;
+}
+.profileinfospers{
+    display: flex;
+    width: 89%;
+    /* padding: 0px 32px; */
+    gap: 33px;
+    align-items: center;
+}
+.image img{
+    width: 96px;
+    height: 96px;
+}
+.profileinfospers h1,.profileinfospers p {
+    margin: 0px;
+    color: #fff;
+}
+.profileinfospers h1{
+    font-size: 21px;
+}
+.plusinfos p img{
+    width: 30px;
+    height: 30px;
+}
+.profileinfospers p{
+        font-size: 12px;
+ 
+}
+.plusinfos {
+    color: #fff;
+}
+.plusinfos span{
+    margin-left: 29px;
+}
+.liketitle{
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 29px;
+}
+.detail{
+    max-height: 139px;
+    overflow-x: scroll;
+    margin-top: -11px;
+}
+
+.detail, .writing p{
+    color: #fff9;
+}
+
+
+@media (min-width: 648px) and (max-width: 719px){
+    .plusinfos span {
+        font-size: 14px;
+    }
+    .detail {
+        font-size: 14px;
+    }
+    .image img {
+        width: 90px;
+        height: 90px;
+    }   
+    .profileinfospers h1 {
+        font-size: 18px;
+    }
+    .plusinfos p img {
+        width: 27px;
+        height: 27px;
+    }
+}
+
+@media (max-width: 648px){
+    .profilcontainer .profilehaut {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 43px;
+    }
+    .profileleftcontainer {
+        width: 75%;
+    }
+    .detail {
+        max-height: 160px;
+    }
+}
+
+@media (max-width: 411px){
+    .plusinfos span {
+        margin-left: 20px;
+        font-size: 13px;
+    }
+    .detail{
+        font-size: 14px;
+        max-height: 125px;
+    }
+    .profileinfospers h1 {
+        font-size: 17px;
+    }
+    .profileinfospers p {
+        font-size: 10px;
+    }
+}

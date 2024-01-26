@@ -1,0 +1,259 @@
+
+/* body{
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+} */
+h1{
+  font-family: 'Aclonica', sans-serif;
+}
+
+nav{
+  background-color: transparent;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 9;
+}
+
+
+.logo{
+  padding: 20px;
+
+}
+.generallinks{
+    display: flex;
+    justify-content: flex-end;
+    width: 396px;
+    gap: 53px;
+}
+
+
+.links {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+.links a{
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  width: 89px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1px;
+}
+
+.links a:hover{
+    border-radius: 12px;
+    background: #D9A363;
+}
+
+.login{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+.log{
+    display: flex;
+    color: #3D7850;
+    border-radius: 20px;
+    width: 83px;
+    height: 31px;
+  background: #BED5B9;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+} 
+
+.navcateg{
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1px;
+  gap: 17px;
+  position: relative;
+  cursor: pointer;
+}
+/* .hover{
+  display: none;
+  transition: display 2s ease;
+}
+.navcateg:hover .hover{
+  display: block;
+  cursor: pointer;
+} */
+
+
+
+/* .hover {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+
+.navcateg:hover .hover {
+  transform: scaleY(1);
+  cursor: pointer;
+} */
+
+nav .hover {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.3s ease;
+  position: absolute;
+  left: -16px;
+    top: 40px;
+  height: 250px
+}
+nav .navcateg:hover .hover {
+  clip-path: inset(0 0 0 0);
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+nav .hover .etoile{
+  width: 33px;
+  height: 33px;
+  transform: rotate(-45deg);
+  background-color: black;
+  margin-bottom: -24px;
+  margin-left: 132px;
+  position: relative;
+  z-index: 90;
+  margin-top: 11px;
+  border : 1px solid #D9A363;
+}
+
+
+nav .hover .car{
+  display: inline-flex;
+  padding: 25px 28px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 10px;
+  background: black;
+  position: relative;
+  z-index: 100;
+  border : 1px solid #D9A363;
+  color: white;
+}
+
+nav .hover .car a, .likenavlink{
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 33px;
+  color: white;
+}
+nav .hover .car a:hover{
+  background-color: #D9A363 ;
+  cursor: pointer;
+}
+
+nav .hover .car  a, .likenavlink{
+  text-decoration: none;
+  color: black;
+}
+
+.likenavlink{
+  background-color: white;
+  border-width: 0px;
+  font-size: 16px;
+}
+
+.likenavlink:hover{
+  background: #D9A363;
+  border-radius: 20px;
+  cursor: pointer;
+
+}
+
+
+
+
+.nomuser{
+  color: #3D7850;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 154px;
+    gap: 15px;
+}
+.side{
+  display: flex;
+  gap: 15px;
+}
+/* .sp{
+  margin-right: 13px;
+} */
+
+
+.lan{
+  width: 66px;
+  gap: 9px;
+  margin-right: 33px;
+  display: flex;
+  align-items: center;
+}
+/* 
+.two{
+  left: -104px;
+  top: 24px;
+}
+ */
+
+/* nav .two{
+  left: -101px;
+  top: 27px;
+} */
+
+nav .ar{
+  width: 24px !important;
+  height: 23px !important;
+  margin: 0px;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */

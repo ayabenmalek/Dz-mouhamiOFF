@@ -1,0 +1,56 @@
+.card{
+    padding: 20px;
+    border-radius: 12px;
+    border: solid #D9A363;
+    margin:  20px 5% 20px 5%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.card>.informations{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    color: white;
+}
+.card>.informations>button{
+    font-family: 'Inter', sans-serif;
+    border: none;
+    font-size: 18px;
+    color: white;
+    border-radius: 12px;
+    padding: 7px 15px 7px 15px;
+    background-color:#D9A363;
+    
+}
+.card>.informations>button:hover{
+    cursor: pointer;
+    background-color:#d9a463c3;
+    
+}
+.card>.informations>h2{
+    font-family: 'Lemon', sans-serif;
+    margin: 0;
+    
+}
+.card>.informations>p{
+    font-size: 18px;
+    font-family: 'Lemon', sans-serif;
+    margin: 0;
+}
+.card>.informations>div>p{ 
+    font-size: 18px;
+    font-family: 'Montserrat';
+    margin: 0;
+}
+.card>.informations>div{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+.card>.informations>div>h3{ 
+    font-family: 'Montserrat';
+    margin: 0;
+}

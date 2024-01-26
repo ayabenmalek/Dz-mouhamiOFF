@@ -1,0 +1,10 @@
+.cont{
+    background-color: black ;
+    height: 999vh;
+}
+.rndvcontainer{
+       display: flex;
+       gap: 32px;
+       padding: 50px 26px 6px 26px;
+   
+}

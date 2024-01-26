@@ -1,0 +1,119 @@
+.step3-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+.step3-div>.details{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.step3-div>.details>textarea{
+    padding: 20px 40px 20px 40px;
+    background-color: rgba(60, 61, 61, 0.7);
+    border-radius: 16px;
+    color: white;
+    border: none;
+    height: 200px;
+    width: 20%;
+    margin-bottom: 20px;
+}
+.step3-div>.details>textarea::placeholder{
+    color: #D9A363;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+.step3-div>.bouttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 10%;
+}
+.step3-div>.bouttons>button{
+    font-family: 'Inter', sans-serif;
+    border: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 20px;
+    padding: 7px 15px 7px 15px;
+    background-color: #D9A363;
+    width: 15%;
+}
+.step3-div>.bouttons>button:hover{
+    background-color: #d9a463d0;
+    cursor: pointer;
+}
+
+
+.cv {
+    position: relative;
+    width: 200px; /* Ajustez la largeur selon vos besoins */
+  }
+  
+  .cv label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    color: #d9a463d0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: rgba(60, 61, 61, 0.7);
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+
+.cv input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.activities>select{
+    padding: 20px 40px 20px 40px;
+    background-color: rgba(60, 61, 61, 0.7);
+    border-radius: 16px;
+    color: white;
+    border: none;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.activities{
+   
+    width: 30%;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 800px) {
+    .step3-div>.bouttons {
+        
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        
+}
+.step3-div>.bouttons>button {
+    
+    width: 30%;
+}
+}
+@media screen and (max-width: 400px){
+    .step3-div>.bouttons>button {
+    
+        width: 50%;
+    }
+}
+
+

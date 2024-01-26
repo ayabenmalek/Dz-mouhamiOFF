@@ -1,0 +1,61 @@
+.review{
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 34px;
+}
+
+.reviewcoor{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+    align-items: center;
+}
+.rate img{
+    width: 32px;
+    height: 30px;
+}
+.coor {
+    display: flex;
+    color: #fff;
+    align-items: center;
+    gap: 17px;
+    padding-left: 12px;
+}
+.coor .date{
+    font-size: 11px;
+    color: #8B8B8B;
+}
+.reviewtext{
+    padding: 2px 7px 9px 7px;
+    color: #ffffff9e;
+    font-size: 13px;
+    line-height: 24px;
+}
+.border{
+    border-bottom: 1px solid #BABABA;
+}
+.nonborder{
+    border: 0px;
+}
+.button{
+    align-items: center;
+    justify-content: center;
+    margin: 28px 0px 15px 0px;
+}
+.button button{
+    border: 0px;    
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+.pasderevue{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 392px;
+    text-align: center;
+    font-size: 23px;
+    color: white;
+    
+}

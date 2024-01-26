@@ -1,0 +1,20 @@
+{
+    "home": "الرئيسية",
+    "contact": "اتصل بنا",
+    "welcome_user": "{username}",
+    "appointments": "مواعيدك",
+    "appointment_planning": "تخطيط المواعيد",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "language": "ع",
+    "toggle_language":"FR",
+    "bienvenue" : "مرحبا بكم في منصتكم ",
+    "muhamy" : "ديزاد-محامي",
+    "pasderndv" : "لا توجد مواعيد في الوقت الحالي",
+    "rdv" : "قائمة المواعيد",
+    "selectionner" : "الزبون المختار",
+    "nom" : "اسم الزبون",
+    "id" : "الرقم الخاص",
+    "action" : "الاداء"
+  }
+  

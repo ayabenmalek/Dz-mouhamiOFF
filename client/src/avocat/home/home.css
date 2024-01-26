@@ -1,0 +1,28 @@
+.home{
+    background-image: url('./pics/homebackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 99vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 88px;
+
+}
+
+
+.titlehome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+.titlehome h1{
+    color: white;
+}
+.titlehome span{
+    color: #D9A363;
+}
