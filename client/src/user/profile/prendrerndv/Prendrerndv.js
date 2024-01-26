@@ -27,7 +27,7 @@ function Prendrerndv({setdate,prendre, setprendre, date}) {
             </div>
         </div>
         <div className="confirmer">
-            <div className="buttonconfirm">
+            <div className="buttonconfirm" onClick={()=>{setprendre(false)}}>
                 Prendre mon RDV
             </div>
         </div>

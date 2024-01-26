@@ -75,25 +75,35 @@ const hours = [
 
 
 
-useEffect(() => {
-  const initialMatchedIndices = arrayback.map(backHour => hours.indexOf(backHour));
-  setMatchedIndices(initialMatchedIndices.filter(index => index !== -1));
-}, []); 
+// useEffect(() => {
+//   const initialMatchedIndices = arrayback.map(backHour => hours.indexOf(backHour));
+//   setMatchedIndices(initialMatchedIndices.filter(index => index !== -1));
+// }, []); 
 
 
-const [matchedIndices, setMatchedIndices] = useState([]);
+// const [matchedIndices, setMatchedIndices] = useState([]);
 
-const handleButtonClick = (hour) => {
-  const currentMatchedIndices = arrayback.reduce((acc, backHour, index) => {
-    if (backHour === hour) {
-      return [...acc, index];
-    }
-    return acc;
-  }, []);
+// const handleButtonClick = (hour) => {
+//   const currentMatchedIndices = arrayback.reduce((acc, backHour, index) => {
+//     if (backHour === hour) {
+//       return [...acc, index];
+//     }
+//     return acc;
+//   }, []);
 
-  if (currentMatchedIndices.length > 0) {
+//   if (currentMatchedIndices.length > 0) {
+//   } else {
+//     setdate({ ...date, heure: hour });
+//   }
+// };
+const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
+
+const handleButtonClick = (index, hour) => {
+  setdate({ ...date, heure: hour });
+  if (selectedButtonIndex === index) {
+    setSelectedButtonIndex(null);
   } else {
-    setdate({ ...date, heure: hour });
+    setSelectedButtonIndex(index);
   }
 };
 
@@ -140,12 +150,16 @@ function handletransition(){
 
 
       <div className="transition2" style={{display : handle.datechecked? 'flex' : 'none'}} >
-        {hours.map((hour, index)=>(
-          <div key={index}   className={`heurebutton ${matchedIndices.includes(index) ? 'checked' : 'notchecked'}`}   onClick={() => handleButtonClick(hour)} >
-            {hour}am
-          </div>
-        ))}
         
+         {hours.map((hour, index) => (
+        <div
+          key={index}
+          className={`heurebutton ${selectedButtonIndex === index ? 'checked' : 'notchecked'}`}
+          onClick={() => handleButtonClick(index, hour)}
+        >
+          {hour}am
+        </div>
+      ))}
 
 
       </div>
