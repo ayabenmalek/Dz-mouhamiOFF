@@ -22,7 +22,6 @@ from django.urls import path, include
 from social_django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('api/', include('lawyer.urls')),
     path('accounts/', include('allauth.urls')),
 ]
