@@ -7,14 +7,12 @@ function Step3({prevStep, cv,
     experience,
     setexperience,
     selectedOptions,
-    setSelectedOptions}) {
+    setselectedOptions}) {
         const check = () => {
             // Vérifiez que tous les champs requis de la deuxième étape sont remplis
             if (
-            cv.trim() === '' ||
             detail.trim() === '' ||
-            experience.trim() === '' ||
-            selectedOptions.trim() === '' 
+            experience.trim() === '' 
             ) {
             alert('Veuillez remplir tous les champs requis.');
             } 
@@ -23,7 +21,7 @@ function Step3({prevStep, cv,
 
     const handleSelectChange = (event) => {
         const selectedValues = Array.from(event.target.selectedOptions, (option) => option.value);
-        setSelectedOptions((prevSelectedOptions) => {
+        setselectedOptions((prevSelectedOptions) => {
         const updatedOptions = [...prevSelectedOptions];
 
         selectedValues.forEach((value) => {
@@ -46,7 +44,7 @@ function Step3({prevStep, cv,
         <div className="step3-div">
             <div className="cv">
                 <label htmlFor="fileInput">Votre CV</label>
-                <input type="file" id="fileInput" name="fileInput"required value={cv} onChange={(e) => setcv(e.target.value)} ></input>
+                <input type="file" onChange={(e) => setcv(e.target.files[0])} />
             </div>
             <div  className="details">
                 <textarea placeholder="Detail sur vous" required value={detail} onChange={(e) => setdetail(e.target.value)} ></textarea>

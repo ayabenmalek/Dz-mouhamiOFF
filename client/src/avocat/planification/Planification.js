@@ -3,8 +3,11 @@ import './planification.css'
 import Nav from '../nav/Navavocat'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 function Planification() {
+  
     const [lang, setlang] = useState('')
     const disabledDates = [
         new Date('Thu Jan 25 2024 '),
@@ -15,10 +18,10 @@ function Planification() {
         year: '',
         month :'',
         day : '',
-        heure:'',
-        nomprenom : '',
-        numero : '',
-        description :''
+        // heure:'',
+        // nomprenom : '',
+        // numero : '',
+        // description :''
       })
       const isDateEmpty = (date) => {
         return date.year === '' && date.month === '' && date.day === '';
@@ -50,6 +53,19 @@ function Planification() {
           sethandle({...handle, datechecked : true})
         }
       }
+
+      function handleplanification(){
+        axios.post('http://localhost:8000/api/avocatdates', date)
+        .then(response => {
+            console.log('Enregistrement réussi :', response.data);
+            Navigate('/planification')
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'enregistrement :', error);
+            console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
+        });
+      };
+        
     
     
   return (
@@ -65,7 +81,7 @@ function Planification() {
                     <Calendar onChange={handleDateChange} value={selectedDate} minDetail="month"  tileDisabled={({ date }) => isDateDisabled(date)}/>
                     </div>
                     <div className="souscalendrier souscalendrierplanification">
-                        <div className="textplan textplanplan">
+                        <div className="textplan textplanplan" onClick={handleplanification}>
                             Selectionner une date
                         </div>
                     </div>

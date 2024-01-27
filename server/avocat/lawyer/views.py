@@ -17,9 +17,14 @@ from .models import Avocat, Admin
 from .serializers import AvocatSerializer
 
 
+
+
+logger = logging.getLogger(__name__)
+
 class RegisterView(APIView):
     def post(self, request):
         try:
+<<<<<<< Updated upstream
             print(request.data)  # Print the received data
             serializer = AvocatSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -28,6 +33,16 @@ class RegisterView(APIView):
         except Exception as e:
             print(f"Exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+=======
+            serializer = AvocatSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            print(request.data)
+            serializer.save()
+            return Response({"message": "Registration successful"}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            logger.error(f"An error occurred during user registration: {e}")
+            return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+>>>>>>> Stashed changes
 
 
 class LoginView(APIView):

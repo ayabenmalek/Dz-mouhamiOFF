@@ -3,6 +3,7 @@ import './signup.css'
 import Step2 from'../../components/signupstep2/Step2'
 import Step3 from'../../components/signupstep3/Step3'
 import google from '../login/Frame 50.png'
+import axios from 'axios';
 export default function Signup() {
 
 
@@ -13,34 +14,40 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     // step2
     const [nom, setNom] = useState('');
-    const [prenom, setPrenom] = useState('');
-    const [selectedValue1, setSelectedValue1] = useState('');
-    const [wilaya, setWilaya] = useState('');
-    const [numeroTel, setNumeroTel] = useState('');
+    const [numero_tel, setNumeroTel] = useState(0);
     const [adressar, setAdressar]=useState('');
     // step3
     const [cv, setcv] = useState('');
     const [experience, setexperience] = useState('');
     const [detail, setdetail] = useState('');
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [setSelectedOptions, setselectedOptions] = useState([]);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const variablebacksignup = {
+            email,
+            username,
+            password,
+            nom,
+            numero_tel,
+            adressar,
+            cv,
+            setSelectedOptions,
+            experience,
+            detail,
+        };
+        console.log(setSelectedOptions)
+        const registerURL = 'http://localhost:8000/api/register';
+        axios.post(registerURL, variablebacksignup)
+        .then(response => {
+            console.log('Enregistrement réussi :', response.data);
+            // Gérer la réponse (par exemple, rediriger l'utilisateur, afficher un message de succès, etc.)
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'enregistrement :', error);
+            console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
+        });
+        };
     
-    const variablebacksignup = {
-    email : {email},
-    username: {username},
-    password: {password},
-    nom: {nom},
-    prenom:{prenom},
-    selectedValue1:{selectedValue1},
-    wilaya:{wilaya},
-    numeroTel:{numeroTel},
-    adressar:{adressar},
-    cv:{cv},
-    selecedOptions:{selectedOptions},
-    experience:{experience},
-    detail:{detail}
-}
-    console.log({variablebacksignup})
-
     const nextStep = () => {
         if (email.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
             alert('Veuillez remplir tous les champs requis.');
@@ -52,10 +59,6 @@ export default function Signup() {
     const prevStep = () => {
         setStep(step - 1);
     };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        };
 
     const steps = ['Step 1', 'Step 2', 'Step 3'];
 
@@ -80,7 +83,7 @@ export default function Signup() {
                 </div>
 
                 {/* Formulaire d'inscription */}
-                <form className="signup-form" onSubmit={ handleSubmit} >
+                <form className="signup-form" onSubmit={handleSubmit} >
                     {step === 1 && (
                         <div className='step1div'>
                             <div className="step1">
@@ -107,14 +110,10 @@ export default function Signup() {
                     {step === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} 
                     // Passez les états correspondant aux champs de la deuxième étape en tant que props
                     nom={nom}
-                    prenom={prenom}
-                    selectedValue1={selectedValue1}
-                    wilaya={wilaya}
-                    numeroTel={numeroTel}
+                    
+                    numeroTel={numero_tel}
                     setNom={setNom}
-                    setPrenom={setPrenom}
-                    setSelectedValue1={setSelectedValue1}
-                    setWilaya={setWilaya}
+                    
                     setNumeroTel={setNumeroTel}
                     adressar={adressar}
                     setAdressar={setAdressar}
@@ -129,8 +128,8 @@ export default function Signup() {
                     setdetail={setdetail}
                     experience={experience}
                     setexperience={setexperience}
-                    selectedOptions={selectedOptions}
-                    setSelectedOptions={setSelectedOptions}
+                    selectedOptions={setSelectedOptions}
+                    setselectedOptions={setselectedOptions}
                     />}
                 </form>
                 
