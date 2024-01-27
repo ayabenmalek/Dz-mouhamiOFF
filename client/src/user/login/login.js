@@ -28,6 +28,24 @@ export default function Login() {
             
     //     })
     // }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const variablebacksignup = {
+            username,
+            password
+            
+        };
+        const registerURL = 'http://localhost:8000/api/register';
+        axios.post(registerURL, variablebacksignup)
+        .then(response => {
+            // if(response.data === )
+            // Gérer la réponse (par exemple, rediriger l'utilisateur, afficher un message de succès, etc.)
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'enregistrement :', error);
+            console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
+        });
+        };
     console.log(variablebacklogin)
     return (
         <div className='logincontent'>
@@ -39,7 +57,7 @@ export default function Login() {
                     <img src={law} alt='' ></img>
                 </div>
                 <div className='right'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                        
                         <input type='text' placeholder="Nom d\'utilisateur"  onChange={(e) => setusername(e.target.value)}></input>
                         <input type='password' placeholder="Mot de passe" onChange={(e) => setpassword(e.target.value)}></input>

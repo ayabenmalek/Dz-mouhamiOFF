@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
 function Planification() {
-  
     const [lang, setlang] = useState('')
     const disabledDates = [
         new Date('Thu Jan 25 2024 '),
@@ -55,15 +54,15 @@ function Planification() {
       }
 
       function handleplanification(){
-        axios.post('http://localhost:8000/api/avocatdates', date)
-        .then(response => {
-            console.log('Enregistrement réussi :', response.data);
-            Navigate('/planification')
-        })
-        .catch(error => {
-            console.error('Erreur lors de l\'enregistrement :', error);
-            console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
-        });
+        // axios.post('http://localhost:8000/api/avocatdates', date)
+        // .then(response => {
+        //     console.log('Enregistrement réussi :', response.data);
+        //     Navigate('/planification')
+        // })
+        // .catch(error => {
+        //     console.error('Erreur lors de l\'enregistrement :', error);
+        //     console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
+        // });
       };
         
     
