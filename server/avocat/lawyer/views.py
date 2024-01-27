@@ -10,7 +10,10 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from requests import Response
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Avocat, Admin
@@ -79,16 +82,11 @@ class LoginView(APIView):
 class AvocatView(APIView):
     def get(self, request):
         try:
-            token = request.COOKIES.get('jwt')
-
-            if not token:
-                raise AuthenticationFailed('Unauthenticated')
-
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-            avocat_id = payload.get('id')  # Change 'avocat_id' to 'id'
+            # Get avocat_id from request parameters
+            avocat_id = request.query_params.get('avocat_id')
 
             if not avocat_id:
-                raise AuthenticationFailed('Invalid token')
+                raise AuthenticationFailed('Avocat ID not provided')
 
             avocat = Avocat.objects.filter(avocat_id=avocat_id).first()
 
@@ -100,7 +98,7 @@ class AvocatView(APIView):
 
         except Exception as e:
             print(f"Exception: {str(e)}")
-            raise
+            return Response({'error': 'Internal Server Error'}, status=500)
 
 
 class LogoutView(APIView):
@@ -117,6 +115,9 @@ logger = logging.getLogger(__name__)
 
 
 class AvocatDatesView(APIView):
+    @api_view(['GET'])
+    @permission_classes([IsAuthenticated])
+    @authentication_classes([SessionAuthentication])
     def get(self, request):
         try:
             token = request.COOKIES.get('jwt')
@@ -186,11 +187,7 @@ class AvocatDatesView(APIView):
             return Response({'error': 'Internal Server Error'}, status=500)
 
 
-class AdminView(View):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
+class AdminView(APIView):
     def get(self, request):
         try:
             avocats = Avocat.objects.values('avocat_id', 'nom')
@@ -205,9 +202,7 @@ class AdminView(View):
 
     def post(self, request):
         try:
-            # Use request.body to get the JSON data
-            data = json.loads(request.body.decode('utf-8'))
-            avocat_id = data.get('avocat_id')
+            avocat_id = request.data.get('avocat_id')
 
             if avocat_id is not None:
                 avocat = Avocat.objects.get(avocat_id=avocat_id)
@@ -220,3 +215,4 @@ class AdminView(View):
         except Exception as e:
             logger.exception("Error in AdminView POST: %s", str(e))
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
