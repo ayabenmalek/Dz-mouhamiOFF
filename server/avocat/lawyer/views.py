@@ -64,7 +64,7 @@ class LoginView(APIView):
 
             response = Response()
             response.set_cookie(key='jwt', value=token, httponly=True)
-            response.data = {'jwt': token, 'is_admin': is_admin}
+            response.data = {'jwt': token, 'is_admin': is_admin, 'username': user.username}
             return response
 
         except AuthenticationFailed as e:
