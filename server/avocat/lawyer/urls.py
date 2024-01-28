@@ -10,5 +10,5 @@ urlpatterns = [
     path('avocatdates', AvocatDatesView.as_view()),
     path('admin', AdminView.as_view()),
     path('filter/', FilterView.as_view()),
-    path('avocat/<int:avocat_id>/review', ReviewCreateView.as_view(), name='create-review')
+    path('review/<int:avocat_id>/', ReviewCreateView.as_view())
 ]

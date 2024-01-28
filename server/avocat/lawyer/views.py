@@ -1,10 +1,9 @@
-import datetime
+from datetime import datetime
 from traceback import format_exc
 import jwt
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, Http404
-from django.shortcuts import get_object_or_404
 from requests import Response
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -16,6 +15,7 @@ from rest_framework.views import APIView
 from .models import Avocat, Admin
 from .serializers import AvocatSerializer, ReviewSerializer
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 
 class RegisterView(APIView):
@@ -105,7 +105,7 @@ class AvocatView(APIView):
             print(f"Exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=401)
 
-        
+
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
@@ -262,22 +262,21 @@ class FilterView(APIView):
 class ReviewCreateView(APIView):
     def post(self, request, avocat_id):
         try:
-            avocat = Avocat.objects.get(id_avocat=avocat_id)
-        except Avocat.DoesNotExist:
-            raise Http404("Avocat not found")
+            avocat = Avocat.objects.get(avocat_id=avocat_id)
+            data = {
+                'editeur_nom': request.data.get('editeur_nom'),
+                'review_txt': request.data.get('review_txt'),
+                'stars': request.data.get('stars'),
+                'date_review': datetime.now().date(),
+                'heur': datetime.now().time(),
+                'id_avocat': avocat.avocat_id,
+            }
 
-        data = {
-            'editeur_nom': request.data.get('editeur_nom'),
-            'review_txt': request.data.get('review_txt'),
-            'stars': request.data.get('stars'),
-            'date_review': request.data.get('date_review'),
-            'heur': request.data.get('heur'),
-            'id_avocat': avocat.id_avocat,
-        }
-
-        serializer = ReviewSerializer(data=data)
-
-        if serializer.is_valid():
+            serializer = ReviewSerializer(data=data)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Review added successfully'}, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
