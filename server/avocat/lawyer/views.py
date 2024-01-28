@@ -4,7 +4,7 @@ from traceback import format_exc
 import jwt
 import logging
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -93,7 +93,7 @@ class AvocatView(APIView):
             avocat = Avocat.objects.filter(avocat_id=avocat_id).first()
 
             if not avocat:
-                raise AuthenticationFailed('Avocat not found')
+                raise Http404('Avocat not found')
 
             serializer = AvocatSerializer(avocat)
             filtered_data = [
