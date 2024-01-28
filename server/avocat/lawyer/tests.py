@@ -8,6 +8,3 @@ class YourTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-from django.test import TestCase
-
-# Create your tests here.

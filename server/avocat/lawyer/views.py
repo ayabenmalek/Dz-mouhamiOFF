@@ -140,6 +140,10 @@ class AvocatDatesView(APIView):
 
             # Retrieve and return the selected dates
             selected_dates_list = avocat.selected_dates.split(',') if avocat.selected_dates else []
+
+            print(f"Selected Dates list: {selected_dates_list}")
+
+            logger.debug(f"Selected Dates list: {selected_dates_list}")
             return Response({'selected_dates': selected_dates_list})
 
         except AuthenticationFailed as auth_failed:
@@ -280,3 +284,58 @@ class ReviewCreateView(APIView):
         except Exception as e:
             print(f"Exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RdvView(APIView):
+    def get(self, request, avocat_id):
+        try:
+            # Retrieve avocat
+            avocat = Avocat.objects.get(avocat_id=avocat_id)
+
+            # Get selected days
+            selected_days = avocat.selected_dates.split(',')
+
+            # Get current date
+            current_date = datetime.now().date()
+
+            # Initialize result dictionary
+            result = {'selected_days': selected_days, 'available_days': []}
+
+            # Check availability for each selected day
+            for day in selected_days:
+                selected_date = datetime.strptime(day, '%Y-%m-%d').date()
+
+                # Check if day is in the future
+                if selected_date >= current_date:
+                    # Check availability based on Rdv table
+                    availability = self.check_availability(avocat_id, selected_date)
+
+                    # Add result to dictionary
+                    result['available_days'].append({
+                        'date': selected_date,
+                        'available': availability
+                    })
+
+            return Response(result, status=status.HTTP_200_OK)
+
+        except Avocat.DoesNotExist:
+            return Response({'error': 'Avocat not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def check_availability(self, avocat_id, selected_date):
+        # Get all hours that need to be checked for availability
+        hours_to_check = [8, 9, 10, 11, 13, 14, 15, 16]
+
+        # Query the Rdv table for the specified avocat and date
+        booked_hours = Rdv.objects.filter(
+            id_avocat=avocat_id,
+            date_rdv=selected_date,
+            heure__in=hours_to_check
+        ).values_list('heure', flat=True)
+
+        # Check if all specified hours are booked
+        all_hours_booked = all(hour in booked_hours for hour in hours_to_check)
+
+        # Return True if available, False otherwise
+        return not all_hours_booked

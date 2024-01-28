@@ -69,3 +69,25 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review #{self.id_review} - {self.editeur_nom}"
+
+
+class Utilisateur(models.Model):
+    id_user = models.AutoField(primary_key=True)
+    tel = models.CharField(max_length=20, null=True, blank=True)
+    description_cas = models.TextField(null=True, blank=True)
+    nom_prenom = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"Utilisateur #{self.id_user}"
+
+
+class Rdv(models.Model):
+    id_rdv = models.AutoField(primary_key=True)
+    date_rdv = models.DateField(null=True, blank=True)
+    heure = models.TimeField(null=True, blank=True)
+    taken = models.BooleanField(null=True, blank=True)
+    id_avocat = models.ForeignKey(Avocat, on_delete=models.CASCADE, null=True, blank=True)
+    id_user = models.ForeignKey('Utilisateur', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"Rdv #{self.id_rdv}"
