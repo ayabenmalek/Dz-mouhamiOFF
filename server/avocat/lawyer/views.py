@@ -1,14 +1,10 @@
 import datetime
 from traceback import format_exc
-
 import jwt
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from requests import Response
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -18,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Avocat, Admin
-from .serializers import AvocatSerializer
+from .serializers import AvocatSerializer, ReviewSerializer
 from django.db.models import Q
 
 
@@ -82,11 +78,9 @@ class LoginView(APIView):
 
 
 class AvocatView(APIView):
-    def get(self, request):
+    def get(self, request, avocat_id):
         try:
-            # Get avocat_id from request parameters
-            avocat_id = request.query_params.get('avocat_id')
-
+            avocat = Avocat.objects.filter(avocat_id=avocat_id).first()
             if not avocat_id:
                 raise AuthenticationFailed('Avocat ID not provided')
 
@@ -247,7 +241,8 @@ class FilterView(APIView):
 
             serializer = AvocatSerializer(avocats, many=True)
             filtered_data = [
-                {'avocat_id': avocat.avocat_id, 'setSelectedOptions': avocat.setSelectedOptions, 'adressar': avocat.adressar, 'nom': avocat.nom} for
+                {'avocat_id': avocat.avocat_id, 'setSelectedOptions': avocat.setSelectedOptions,
+                 'adressar': avocat.adressar, 'nom': avocat.nom} for
                 avocat in avocats]
 
             return Response(filtered_data)
@@ -256,3 +251,27 @@ class FilterView(APIView):
             error_message = f"Exception: {str(e)}\n{format_exc()}"
             print(error_message)
             return Response({'error': 'Internal Server Error'}, status=500)
+
+
+class ReviewCreateView(APIView):
+    def post(self, request, avocat_id):
+        try:
+            avocat = Avocat.objects.get(id_avocat=avocat_id)
+        except Avocat.DoesNotExist:
+            raise Http404("Avocat not found")
+
+        data = {
+            'editeur_nom': request.data.get('editeur_nom'),
+            'review_txt': request.data.get('review_txt'),
+            'stars': request.data.get('stars'),
+            'date_review': request.data.get('date_review'),
+            'heur': request.data.get('heur'),
+            'id_avocat': avocat.id_avocat,
+        }
+
+        serializer = ReviewSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

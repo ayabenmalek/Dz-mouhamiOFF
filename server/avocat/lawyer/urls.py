@@ -1,13 +1,14 @@
 
 from django.urls import path
-from .views import RegisterView, LoginView, AvocatView, LogoutView, AvocatDatesView, AdminView, FilterView
+from .views import RegisterView, LoginView, AvocatView, LogoutView, AvocatDatesView, AdminView, FilterView, ReviewCreateView
 
 urlpatterns = [
     path('register', RegisterView.as_view()),
     path('login', LoginView.as_view()),
-    path('avocat/', AvocatView.as_view()),
+    path('avocat/<int:avocat_id>', AvocatView.as_view()),
     path('logout', LogoutView.as_view()),
     path('avocatdates', AvocatDatesView.as_view()),
     path('admin', AdminView.as_view()),
-    path('filter/', FilterView.as_view())
+    path('filter/', FilterView.as_view()),
+    path('avocat/<int:avocat_id>/review', ReviewCreateView.as_view(), name='create-review')
 ]
