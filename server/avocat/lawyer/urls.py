@@ -5,7 +5,7 @@ from .views import RegisterView, LoginView, AvocatView, LogoutView, AvocatDatesV
 urlpatterns = [
     path('register', RegisterView.as_view()),
     path('login', LoginView.as_view()),
-    path('avocat/<int:avocat_id>', AvocatView.as_view()),
+    path('avocat/<int:avocat_id>/', AvocatView.as_view()),
     path('logout', LogoutView.as_view()),
     path('avocatdates', AvocatDatesView.as_view()),
     path('admin', AdminView.as_view()),

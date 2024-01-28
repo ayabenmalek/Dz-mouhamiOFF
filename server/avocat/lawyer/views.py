@@ -95,11 +95,17 @@ class AvocatView(APIView):
                  'num_tel': avocat.numero_tel, 'description': avocat.detail, 'experience': avocat.experience}]
             return Response(filtered_data)
 
+        except AuthenticationFailed as e:
+            return Response({'error': str(e)}, status=401)
+
+        except Http404 as e:
+            return Response({'error': str(e)}, status=401)
+
         except Exception as e:
             print(f"Exception: {str(e)}")
-            return Response({'error': 'Internal Server Error'}, status=500)
+            return Response({'error': 'Internal Server Error'}, status=401)
 
-
+        
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
