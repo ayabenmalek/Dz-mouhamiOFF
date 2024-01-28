@@ -247,7 +247,7 @@ class FilterView(APIView):
 
             serializer = AvocatSerializer(avocats, many=True)
             filtered_data = [
-                {'setSelectedOptions': avocat.setSelectedOptions, 'adressar': avocat.adressar, 'nom': avocat.nom} for
+                {'avocat_id': avocat.avocat_id, 'setSelectedOptions': avocat.setSelectedOptions, 'adressar': avocat.adressar, 'nom': avocat.nom} for
                 avocat in avocats]
 
             return Response(filtered_data)
