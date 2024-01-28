@@ -222,7 +222,7 @@ class AdminView(APIView):
 
 
 class FilterView(APIView):
-    def get(self, request):
+    def post(self, request):
         try:
             # Get filter parameters from request
             wilaya = request.data.get('wilaya')
@@ -256,6 +256,7 @@ class FilterView(APIView):
             error_message = f"Exception: {str(e)}\n{format_exc()}"
             print(error_message)
             return Response({'error': 'Internal Server Error'}, status=500)
+
 
 
 class ReviewCreateView(APIView):
