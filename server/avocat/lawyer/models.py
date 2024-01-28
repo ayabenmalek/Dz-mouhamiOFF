@@ -57,3 +57,15 @@ class Avocat(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class Review(models.Model):
+    id_review = models.AutoField(primary_key=True)
+    editeur_nom = models.CharField(max_length=50)
+    review_txt = models.TextField()
+    stars = models.IntegerField()
+    date_review = models.DateField()
+    heur = models.TimeField()
+    id_avocat = models.ForeignKey(Avocat, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Review #{self.id_review} - {self.editeur_nom}"

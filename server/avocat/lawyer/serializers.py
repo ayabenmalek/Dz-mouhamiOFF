@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Avocat
 
 from rest_framework import serializers
-from .models import Avocat, Admin
+from .models import Avocat, Admin, Review
 
 
 class AvocatSerializer(serializers.ModelSerializer):
@@ -28,4 +28,10 @@ class AvocatSerializer(serializers.ModelSerializer):
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
         fields = '__all__'
