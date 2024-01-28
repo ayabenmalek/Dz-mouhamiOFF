@@ -250,13 +250,12 @@ class FilterView(APIView):
                  'adressar': avocat.adressar, 'nom': avocat.nom} for
                 avocat in avocats]
 
-            return Response(filtered_data)
+            return Response({'filtered_data': filtered_data}, status=status.HTTP_200_OK)
 
         except Exception as e:
             error_message = f"Exception: {str(e)}\n{format_exc()}"
             print(error_message)
             return Response({'error': 'Internal Server Error'}, status=500)
-
 
 
 class ReviewCreateView(APIView):
@@ -282,31 +281,19 @@ class ReviewCreateView(APIView):
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class RdvView(APIView):
+class FirstGetView(APIView):
     def get(self, request, avocat_id):
         try:
-            # Retrieve avocat
             avocat = Avocat.objects.get(avocat_id=avocat_id)
-
-            # Get selected days
             selected_days = avocat.selected_dates.split(',')
-
-            # Get current date
             current_date = datetime.datetime.now().date()
-
-            # Initialize result dictionary
             result = set()
 
-            # Check availability for each selected day
             for day in selected_days:
                 selected_date = datetime.datetime.strptime(day, '%Y-%m-%d').date()
 
-                # Check if day is in the future
                 if selected_date >= current_date:
-                    # Check availability based on Rdv table
-                    availability = self.check_availability(avocat_id, selected_date)
-
-                    # Add result to dictionary
+                    availability = AvailabilityChecker.check_availability(avocat_id, selected_date)
                     result.add(selected_date.strftime('%Y-%m-%d'))
 
             return Response(result, status=status.HTTP_200_OK)
@@ -321,56 +308,37 @@ class RdvView(APIView):
             logger.exception(f"Unhandled exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def check_availability(self, avocat_id, selected_date):
-        # Get all hours that need to be checked for availability
-        hours_to_check = [8, 9, 10, 11, 13, 14, 15, 16]
 
-        # Convert selected_date to a string in ISO format
-        selected_date_iso = selected_date.isoformat()
+class SecondGetAndPostView(APIView):
+    def get(self, request, avocat_id, selected_date):
+        try:
+            all_hours = [8, 9, 10, 11, 13, 14, 15, 16]
+            booked_hours = Rdv.objects.filter(
+                id_avocat=avocat_id,
+                date_rdv=selected_date,
+                heure__in=all_hours
+            ).values_list('heure', flat=True)
 
-        # Convert hours to strings
-        hours_to_check_str = [str(hour) for hour in hours_to_check]
+            available_hours = [hour for hour in all_hours if hour not in booked_hours]
 
-        # Query the Rdv table for the specified avocat and date
-        booked_hours = Rdv.objects.filter(
-            id_avocat=avocat_id,
-            date_rdv=selected_date_iso,
-            heure__in=[datetime.time(hour) for hour in hours_to_check]
-        ).values_list('heure', flat=True)
+            logger.debug(f"available_hours: {available_hours}")
 
-        # Check if all specified hours are booked
-        all_hours_booked = all(hour in booked_hours for hour in hours_to_check)
+            return Response({'available_hours': available_hours})
 
-        # Return True if available, False otherwise
-        return not all_hours_booked
-
-    def get_available_hours(self, avocat_id, selected_date):
-        # Get all hours that need to be checked for availability
-        all_hours = [8, 9, 10, 11, 13, 14, 15, 16]
-
-        # Query the Rdv table for the specified avocat and date
-        booked_hours = Rdv.objects.filter(
-            id_avocat=avocat_id,
-            date_rdv=selected_date,
-            heure__in=all_hours
-        ).values_list('heure', flat=True)
-
-        # Calculate available hours by excluding booked hours
-        available_hours = [hour for hour in all_hours if hour not in booked_hours]
-
-        # Return a response with available hours
-        return Response({'available_hours': available_hours})
+        except Exception as e:
+            logger.exception("Exception in get_available_hours")
+            raise
 
     def post(self, request, avocat_id):
         try:
-            # Get data from request
             selected_date_data = request.data
-            selected_date = datetime.datetime(
-                year=selected_date_data.get('year'),
-                month=selected_date_data.get('month'),
-                day=selected_date_data.get('day'),
-                hour=int(selected_date_data.get('heure').split('.')[0]),  # Extract hour as an integer
-                minute=int(selected_date_data.get('heure').split('.')[1])  # Extract minute as an integer
+
+            selected_date = datetime.date(
+                year=int(selected_date_data.get('year')),
+                month=int(selected_date_data.get('month')),
+                day=int(selected_date_data.get('day')),
+                hour=int(selected_date_data.get('heure').split('.')[0]),
+                minute=int(selected_date_data.get('heure').split('.')[1])
             )
 
             user_info = {
@@ -379,25 +347,41 @@ class RdvView(APIView):
                 'nom_prenom': f"{selected_date_data.get('nom')} {selected_date_data.get('prenom')}",
             }
 
-            # Check if the selected hour is available
-            if not self.check_availability(avocat_id, selected_date):
+            if not AvailabilityChecker.check_availability(avocat_id, selected_date):
                 return Response({'error': 'Selected hour is not available'}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Create a new Utilisateur entry
             utilisateur = Utilisateur.objects.create(**user_info)
 
-            # Create a new Rdv entry
             Rdv.objects.create(
                 id_avocat=avocat_id,
                 id_user=utilisateur.id_user,
-                date_rdv=selected_date.date(),  # Extract date components (year, month, day)
+                date_rdv=selected_date.date(),
                 heure=selected_date.hour,
-                taken=True  # Set taken to True for a booked appointment
+                taken=True
             )
 
-            # Return a success response
             return Response({'message': 'Appointment booked successfully'}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            print(f"Exception: {str(e)}")
+            logger.exception(f"Exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class AvailabilityChecker:
+    @staticmethod
+    def check_availability(avocat_id, selected_date):
+        # Get all hours that need to be checked for availability
+        hours_to_check = [8, 9, 10, 11, 13, 14, 15, 16]
+
+        # Query the Rdv table for the specified avocat and date
+        booked_hours = Rdv.objects.filter(
+            id_avocat=avocat_id,
+            date_rdv=selected_date,
+            heure__in=[datetime.time(hour) for hour in hours_to_check]
+        ).values_list('heure', flat=True)
+
+        # Check if all specified hours are booked
+        all_hours_booked = all(hour in booked_hours for hour in hours_to_check)
+
+        # Return True if available, False otherwise
+        return not all_hours_booked
