@@ -8,6 +8,6 @@ urlpatterns = [
     path('avocat', AvocatView.as_view()),
     path('logout', LogoutView.as_view()),
     path('avocatdates', AvocatDatesView.as_view()),
-    path('admin', AdminView.as_view()),
-    path('filter', FilterView.as_view())
+    path('admin/<int:avocat_id>', AdminView.as_view()),
+    path('filter/', FilterView.as_view())
 ]
