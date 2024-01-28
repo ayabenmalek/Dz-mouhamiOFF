@@ -1,6 +1,7 @@
 import datetime
+from traceback import format_exc
+
 import jwt
-import json
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -18,6 +19,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Avocat, Admin
 from .serializers import AvocatSerializer
+from django.db.models import Q
 
 
 class RegisterView(APIView):
@@ -94,7 +96,10 @@ class AvocatView(APIView):
                 raise AuthenticationFailed('Avocat not found')
 
             serializer = AvocatSerializer(avocat)
-            return Response(serializer.data)
+            filtered_data = [
+                {'SelectedOptions': avocat.setSelectedOptions, 'address': avocat.adressar, 'nom': avocat.nom,
+                 'num_tel': avocat.numero_tel, 'description': avocat.detail, 'experience': avocat.experience}]
+            return Response(filtered_data)
 
         except Exception as e:
             print(f"Exception: {str(e)}")
@@ -216,3 +221,38 @@ class AdminView(APIView):
             logger.exception("Error in AdminView POST: %s", str(e))
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
+
+class FilterView(APIView):
+    def get(self, request):
+        try:
+            # Get filter parameters from request
+            wilaya = request.query_params.get('wilaya')
+            option = request.query_params.get('option')
+            name = request.query_params.get('name')
+
+            # Filter avocats based on the provided criteria
+            avocats = Avocat.objects.all()
+
+            if wilaya and option:
+                avocats = avocats.filter(
+                    Q(adressar__icontains=wilaya) & Q(setSelectedOptions__contains=[option])
+                )
+            elif wilaya:
+                avocats = avocats.filter(adressar__icontains=wilaya)
+            elif option:
+                avocats = avocats.filter(setSelectedOptions__contains=[option])
+
+            if name:
+                avocats = avocats.filter(nom__icontains=name)
+
+            serializer = AvocatSerializer(avocats, many=True)
+            filtered_data = [
+                {'setSelectedOptions': avocat.setSelectedOptions, 'adressar': avocat.adressar, 'nom': avocat.nom} for
+                avocat in avocats]
+
+            return Response(filtered_data)
+
+        except Exception as e:
+            error_message = f"Exception: {str(e)}\n{format_exc()}"
+            print(error_message)
+            return Response({'error': 'Internal Server Error'}, status=500)
