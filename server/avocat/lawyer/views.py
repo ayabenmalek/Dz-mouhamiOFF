@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from traceback import format_exc
 import jwt
 import logging
@@ -6,13 +6,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, Http404
 from requests import Response
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Avocat, Admin
+from .models import Avocat, Admin, Rdv, Utilisateur
 from .serializers import AvocatSerializer, ReviewSerializer
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
@@ -120,9 +117,6 @@ logger = logging.getLogger(__name__)
 
 
 class AvocatDatesView(APIView):
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated])
-    @authentication_classes([SessionAuthentication])
     def get(self, request):
         try:
             token = request.COOKIES.get('jwt')
@@ -339,3 +333,54 @@ class RdvView(APIView):
 
         # Return True if available, False otherwise
         return not all_hours_booked
+
+    def get_available_hours(self, avocat_id, selected_date):
+        # Get all hours that need to be checked for availability
+        all_hours = [8, 9, 10, 11, 13, 14, 15, 16]
+
+        # Query the Rdv table for the specified avocat and date
+        booked_hours = Rdv.objects.filter(
+            id_avocat=avocat_id,
+            date_rdv=selected_date,
+            heure__in=all_hours
+        ).values_list('heure', flat=True)
+
+        # Calculate available hours by excluding booked hours
+        available_hours = [hour for hour in all_hours if hour not in booked_hours]
+
+        # Return a response with available hours
+        return Response({'available_hours': available_hours})
+
+    def post(self, request, avocat_id):
+        try:
+            # Get data from request
+            selected_date = request.data.get('selected_date')
+            selected_hour = request.data.get('selected_hour')
+            user_info = {
+                'tel': request.data.get('tel'),
+                'description_cas': request.data.get('description_cas'),
+                'nom_prenom': request.data.get('nom_prenom'),
+            }
+
+            # Check if the selected hour is available
+            if not self.check_availability(avocat_id, selected_date):
+                return Response({'error': 'Selected hour is not available'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Create a new Utilisateur entry
+            utilisateur = Utilisateur.objects.create(**user_info)
+
+            # Create a new Rdv entry
+            Rdv.objects.create(
+                id_avocat=avocat_id,
+                id_user=utilisateur.id_user,
+                date_rdv=selected_date,
+                heure=selected_hour,
+                taken=True  # Set taken to True for a booked appointment
+            )
+
+            # Return a success response
+            return Response({'message': 'Appointment booked successfully'}, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
