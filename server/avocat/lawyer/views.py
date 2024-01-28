@@ -284,16 +284,24 @@ class FirstGetView(APIView):
     def get(self, request, avocat_id):
         try:
             avocat = Avocat.objects.get(avocat_id=avocat_id)
-            selected_days = avocat.selected_dates.split(',')
+            selected_dates = avocat.selected_dates.split(',')
             current_date = datetime.datetime.now().date()
             result = set()
 
-            for day in selected_days:
-                selected_date = datetime.datetime.strptime(day, '%Y-%m-%d').date()
+            for date_str in selected_dates:
+                # Skip invalid or None values
+                if not date_str:
+                    continue
 
-                if selected_date >= current_date:
-                    availability = AvailabilityChecker.check_availability(avocat_id, selected_date)
-                    result.add(selected_date.strftime('%Y-%m-%d'))
+                try:
+                    selected_date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+
+                    if selected_date >= current_date:
+                        availability = AvailabilityChecker.check_availability(avocat_id, selected_date)
+                        result.add(selected_date.strftime('%Y-%m-%d'))
+
+                except ValueError as e:
+                    logger.warning(f"Ignoring invalid date format: {date_str}")
 
             return Response(result, status=status.HTTP_200_OK)
 
@@ -312,46 +320,53 @@ class SecondGetAndPostView(APIView):
     def get(self, request, avocat_id, selected_date):
         try:
             all_hours = [8, 9, 10, 11, 13, 14, 15, 16]
+
+            # Parse the selected_date to ensure it's a string in the format '%Y-%m-%d'
+            selected_date = datetime.datetime.strptime(selected_date, '%Y-%m-%d').date()
+
             booked_hours = Rdv.objects.filter(
                 id_avocat=avocat_id,
                 date_rdv=selected_date,
-                heure__in=all_hours
+                heure__in=[datetime.time(hour) for hour in all_hours]
             ).values_list('heure', flat=True)
 
             available_hours = [hour for hour in all_hours if hour not in booked_hours]
 
-            return JsonResponse({'available_hours': available_hours})
+            logger.debug(f"available_hours: {available_hours}")
+
+            return Response(set(available_hours))
 
         except Exception as e:
             logger.exception("Exception in get_available_hours")
-            return JsonResponse({'error': 'Internal Server Error'}, status=500)
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request, avocat_id):
         try:
             selected_date_data = request.data
 
             selected_date = datetime.date(
-                year=int(selected_date_data.get('year')),
-                month=int(selected_date_data.get('month')),
-                day=int(selected_date_data.get('day')),
+                year=selected_date_data.get('year'),
+                month=selected_date_data.get('month'),
+                day=selected_date_data.get('day'),
             )
-
-            user_info = {
-                'tel': selected_date_data.get('numero'),
-                'description_cas': selected_date_data.get('description'),
-                'nom_prenom': f"{selected_date_data.get('nom')} {selected_date_data.get('prenom')}",
-            }
+            heure_data = selected_date_data.get('heure')
+            heure_str = f'{heure_data:02d}:00'  # Convert to zero-padded string, e.g., '09:00'
+            heure_object = datetime.datetime.strptime(heure_str, '%H:%M').time()
 
             if not AvailabilityChecker.check_availability(avocat_id, selected_date):
                 return JsonResponse({'error': 'Selected hour is not available'}, status=400)
-
-            utilisateur = Utilisateur.objects.create(**user_info)
+            avocat = Avocat.objects.get(pk=avocat_id)
+            utilisateur = Utilisateur.objects.create(
+                tel=selected_date_data.get('numero'),
+                description_cas=selected_date_data.get('description'),
+                nom_prenom=f"{selected_date_data.get('nom')} {selected_date_data.get('prenom')}"
+            )
 
             Rdv.objects.create(
-                id_avocat=avocat_id,
-                id_user=utilisateur.id_user,
+                id_avocat=avocat,
+                id_user=utilisateur,
                 date_rdv=selected_date,
-                heure=datetime.datetime.now().time(),
+                heure=heure_object,
                 taken=True
             )
 

@@ -13,4 +13,5 @@ urlpatterns = [
     path('review/<int:avocat_id>/', ReviewCreateView.as_view()),
     path('first_get/<int:avocat_id>/', FirstGetView.as_view()),
     path('second_get_and_post/<int:avocat_id>/<str:selected_date>/', SecondGetAndPostView.as_view()),
+    path('second_get_and_post/<int:avocat_id>/', SecondGetAndPostView.as_view()),
 ]

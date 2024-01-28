@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "71a24374-de9f-4076-ac0c-dd2c7a3efc23",
+		"name": "testes unitaires",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32139684"
+	},
+	"item": [
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "localhost:8000/api/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"dihia1\",\r\n   \"password\": 123\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "avocatlogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"mey_admin\",\r\n   \"password\": 1234\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "adminlogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"mey_admin\",\r\n   \"password\": 1234\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8000/api/admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/api/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "amindeleteavocat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"avocat_id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "viewavocatprofile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/filter?wilaya=tizi&option=o2",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "wilaya",
+									"value": "tizi"
+								},
+								{
+									"key": "option",
+									"value": "o2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterbywilayaandoption",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/filter?wilaya=tizi&option=o2",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "wilaya",
+									"value": "tizi"
+								},
+								{
+									"key": "option",
+									"value": "o2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterbywilayaandoptions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"wilaya\": \"tizi\",\r\n    \"option\": \"o2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/filter",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "wilaya",
+									"value": "tizi",
+									"disabled": true
+								},
+								{
+									"key": "option",
+									"value": "o2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterbyname",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"romi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/filter",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "wilaya",
+									"value": "tizi",
+									"disabled": true
+								},
+								{
+									"key": "option",
+									"value": "o2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettingwhenavocatisavailable",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzA2NjM5OTQ5LCJpYXQiOjE3MDY0NjcxNDksInVzZXJuYW1lIjoibHluZSIsImlzX2FkbWluIjpmYWxzZX0.VWYFKhvhJNI8MwcOz16hjOGsyqsX9ev3WqEjWAROGEc",
+								"type": "text"
+							}
+						],
+						"url": "localhost:8000/api/avocatdates"
+					},
+					"response": []
+				},
+				{
+					"name": "planningworkdates",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzA2NjM5OTQ5LCJpYXQiOjE3MDY0NjcxNDksInVzZXJuYW1lIjoibHluZSIsImlzX2FkbWluIjpmYWxzZX0.VWYFKhvhJNI8MwcOz16hjOGsyqsX9ev3WqEjWAROGEc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2025,\r\n    \"month\": 2,\r\n    \"day\": 18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/avocatdates"
+					},
+					"response": []
+				},
+				{
+					"name": "addareview",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"editeur_nom\": \"John mimi\",\r\n    \"review_txt\": \"Great service!\",\r\n    \"stars\": 4\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/review/6/"
+					},
+					"response": []
+				},
+				{
+					"name": "firstgetofbooking(to get available days)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/api/first_get/7"
+					},
+					"response": []
+				},
+				{
+					"name": "availablehoursinthechosenday",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/api/second_get_and_post/7/2024-03-18"
+					},
+					"response": []
+				},
+				{
+					"name": "rdvbooking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2024,\r\n    \"month\": 3,\r\n    \"day\": 18,\r\n    \"numero\": \"123456789\",\r\n    \"description\": \"Some description........\",\r\n    \"nom\": \"lily\",\r\n    \"prenom\": \"Doe\",\r\n    \"heure\": 9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/api/second_get_and_post/7/"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
