@@ -64,7 +64,7 @@ class Review(models.Model):
     review_txt = models.TextField()
     stars = models.IntegerField()
     date_review = models.DateField()
-    heur = models.TimeField()
+    heure = models.TimeField()
     id_avocat = models.ForeignKey(Avocat, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -244,7 +244,6 @@ class FilterView(APIView):
             if name:
                 avocats = avocats.filter(nom__icontains=name)
 
-            serializer = AvocatSerializer(avocats, many=True)
             filtered_data = [
                 {'avocat_id': avocat.avocat_id, 'setSelectedOptions': avocat.setSelectedOptions,
                  'adressar': avocat.adressar, 'nom': avocat.nom} for
@@ -267,7 +266,7 @@ class ReviewCreateView(APIView):
                 'review_txt': request.data.get('review_txt'),
                 'stars': request.data.get('stars'),
                 'date_review': datetime.datetime.now().date(),
-                'heur': datetime.datetime.now().time(),
+                'heure': datetime.datetime.now().time(),
                 'id_avocat': avocat.avocat_id,
             }
 
@@ -321,13 +320,11 @@ class SecondGetAndPostView(APIView):
 
             available_hours = [hour for hour in all_hours if hour not in booked_hours]
 
-            logger.debug(f"available_hours: {available_hours}")
-
-            return Response({'available_hours': available_hours})
+            return JsonResponse({'available_hours': available_hours})
 
         except Exception as e:
             logger.exception("Exception in get_available_hours")
-            raise
+            return JsonResponse({'error': 'Internal Server Error'}, status=500)
 
     def post(self, request, avocat_id):
         try:
@@ -337,8 +334,6 @@ class SecondGetAndPostView(APIView):
                 year=int(selected_date_data.get('year')),
                 month=int(selected_date_data.get('month')),
                 day=int(selected_date_data.get('day')),
-                hour=int(selected_date_data.get('heure').split('.')[0]),
-                minute=int(selected_date_data.get('heure').split('.')[1])
             )
 
             user_info = {
@@ -348,23 +343,23 @@ class SecondGetAndPostView(APIView):
             }
 
             if not AvailabilityChecker.check_availability(avocat_id, selected_date):
-                return Response({'error': 'Selected hour is not available'}, status=status.HTTP_400_BAD_REQUEST)
+                return JsonResponse({'error': 'Selected hour is not available'}, status=400)
 
             utilisateur = Utilisateur.objects.create(**user_info)
 
             Rdv.objects.create(
                 id_avocat=avocat_id,
                 id_user=utilisateur.id_user,
-                date_rdv=selected_date.date(),
-                heure=selected_date.hour,
+                date_rdv=selected_date,
+                heure=datetime.datetime.now().time(),
                 taken=True
             )
 
-            return Response({'message': 'Appointment booked successfully'}, status=status.HTTP_201_CREATED)
+            return JsonResponse({'message': 'Appointment booked successfully'}, status=201)
 
         except Exception as e:
             logger.exception(f"Exception: {str(e)}")
-            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return JsonResponse({'error': 'Internal Server Error'}, status=500)
 
 
 class AvailabilityChecker:
