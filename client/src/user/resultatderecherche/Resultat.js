@@ -4,27 +4,50 @@ import { useState } from 'react';
 import './Resultat.css'
 import Navbar from '../../components/navavocat/Navavocat'
 import Avocatcard from '../../components/avocatcard/avocatcard';
-
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 export default function Resultat() {
     const [selectedValuespecgen, setSelectedValuespecgen] = useState('');
     const handleChangespecgen = (event) => {
         setSelectedValuespecgen(event.target.value);
     };
-    const [selectedValuewilaya, setSelectedValuewilaya] = useState('');
+    const location = useLocation();
+    const { selectedValuewilaya, selectedValueactivity, name} = location.state ;
+    const wilaya=selectedValuewilaya;
+    const option=selectedValueactivity;
+    const [selectedValuewilaya1, setSelectedValuewilaya1] = useState('');
     const handleChangewilaya = (event) => {
-        setSelectedValuewilaya(event.target.value);
+        setSelectedValuewilaya1(event.target.value);
     };
-    const [selectedValueactivity, setSelectedValueactivity] = useState('');
+    const [selectedValueactivity1, setSelectedValueactivity1] = useState('');
     const handleChangeactivity = (event) => {
-        setSelectedValueactivity(event.target.value);
+        setSelectedValueactivity1(event.target.value);
     };
     const activityArray=['option1','option2','option3','option4','option5','option6']
     const wilayaArray=['option1','option2','option3','option4','option5','option6']
 
-    const navigate = useNavigate();
-    const handelnavigatetoresult = () => {
-        navigate('/Result');
-    };
+    
+    
+    const [listedavocat,setlistesavocat]=useState([])
+    // useEffect(() => {
+    //     const requestData ={
+    //         wilaya,
+    //         option,
+    //         name
+    //     }
+    //     axios.post(`http://localhost:8000/api/filter`, requestData, { withCredentials: true })
+    //       .then((response) => {
+    //         setlistesavocat(response.data);
+    //         console.log('list',listedavocat);
+    //       })
+    //       .catch((err) => {
+    //         console.log('ere', err);
+    //         console.log('ere', err.response);
+    //       });
+    //   },   [wilaya, option, name]); // Ajoutez les dépendances ici
+    // console.log(location.state)
+    // console.log(wilaya,option,name)
     return (
         <div className='result'>
                 <Navbar />
@@ -39,17 +62,17 @@ export default function Resultat() {
                                         <option value="option1" className='option'>Spécialiste</option>
                                         <option value="option2" className='option'>Généraliste</option>
                                     </select>
-                                    <select id="dropdown" value={selectedValuewilaya} onChange={handleChangewilaya}required >
+                                    <select id="dropdown" value={selectedValuewilaya1} onChange={handleChangewilaya}required >
                                         <option value="" disabled>
                                         Wilaya
                                         </option>
-                                        {wilayaArray.map((wilaya) => (
-                                        <option className='option' key={wilaya} value={wilaya}>
-                                            {wilaya}
+                                        {wilayaArray.map((wilaya1) => (
+                                        <option className='option' key={wilaya1} value={wilaya1}>
+                                            {wilaya1}
                                         </option>
                                         ))}
                                     </select>
-                                    <select  id="dropdown" value={selectedValueactivity} onChange={handleChangeactivity}required >
+                                    <select  id="dropdown" value={selectedValueactivity1} onChange={handleChangeactivity}required >
                                         <option value="" disabled>
                                             Sélectionner une activitie
                                         </option>
@@ -60,7 +83,7 @@ export default function Resultat() {
                                         ))}
                                     </select>
                                 
-                                <button className="homebutt" onClick={handelnavigatetoresult}>Trouver un avocat</button>
+                                <button className="homebutt" >Trouver un avocat</button>
                                 </div>
                         </div>
                         <div className='secondsection'>
@@ -73,8 +96,19 @@ export default function Resultat() {
                         </div>
                 </div>
             <div className='cards'>
-                <h3>1203 <span> Resultats</span></h3>
-                <Avocatcard />
+                <h3>03 <span> Resultats</span></h3>
+                
+                <Avocatcard name='test' adresse='Amizour Béjaia'
+                
+                /> 
+                <Avocatcard name='aymen' adresse='Boumerdes'
+                
+                /> 
+                <Avocatcard name='test' adresse='Djelfa'
+                
+                /> 
+            
+                
             </div>
         </div>
         

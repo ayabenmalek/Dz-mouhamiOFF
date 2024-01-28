@@ -12,6 +12,7 @@ import Newmembers from './admin/newmembers/newmembers'
 import Rnvd from './avocat/Vosrndv/Rnvd';
 import Homeavocat from './avocat/home/Home'
 import Profile from './user/profile/Profile';
+import Profile1 from './user/profile/profile1';
 import Planification from './avocat/planification/Planification';
 import Loginadmin from './admin/loginadmin/loginadmin'
 
@@ -32,6 +33,7 @@ class App extends Component {
                     <Route path="/user/profile" element={<Profile/>} />
                     <Route path="/planification" element={<Planification/>} />
                     <Route path="/Loginadmin" element={<Loginadmin/>} />
+                    <Route path="/user/Profile1" element={<Profile1/>} />
             </Routes>
           
         </section>
