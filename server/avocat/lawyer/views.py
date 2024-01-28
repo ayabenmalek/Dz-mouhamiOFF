@@ -6,7 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, Http404
 from requests import Response
 from rest_framework import status
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Avocat, Admin, Rdv, Utilisateur
@@ -224,9 +225,9 @@ class FilterView(APIView):
     def get(self, request):
         try:
             # Get filter parameters from request
-            wilaya = request.query_params.get('wilaya')
-            option = request.query_params.get('option')
-            name = request.query_params.get('name')
+            wilaya = request.data.get('wilaya')
+            option = request.data.get('option')
+            name = request.data.get('name')
 
             # Filter avocats based on the provided criteria
             avocats = Avocat.objects.all()
@@ -265,8 +266,8 @@ class ReviewCreateView(APIView):
                 'editeur_nom': request.data.get('editeur_nom'),
                 'review_txt': request.data.get('review_txt'),
                 'stars': request.data.get('stars'),
-                'date_review': datetime.now().date(),
-                'heur': datetime.now().time(),
+                'date_review': datetime.datetime.now().date(),
+                'heur': datetime.datetime.now().time(),
                 'id_avocat': avocat.avocat_id,
             }
 
@@ -290,14 +291,14 @@ class RdvView(APIView):
             selected_days = avocat.selected_dates.split(',')
 
             # Get current date
-            current_date = datetime.now().date()
+            current_date = datetime.datetime.now().date()
 
             # Initialize result dictionary
-            result = {'selected_days': selected_days, 'available_days': []}
+            result = set()
 
             # Check availability for each selected day
             for day in selected_days:
-                selected_date = datetime.strptime(day, '%Y-%m-%d').date()
+                selected_date = datetime.datetime.strptime(day, '%Y-%m-%d').date()
 
                 # Check if day is in the future
                 if selected_date >= current_date:
@@ -305,27 +306,35 @@ class RdvView(APIView):
                     availability = self.check_availability(avocat_id, selected_date)
 
                     # Add result to dictionary
-                    result['available_days'].append({
-                        'date': selected_date,
-                        'available': availability
-                    })
+                    result.add(selected_date.strftime('%Y-%m-%d'))
 
             return Response(result, status=status.HTTP_200_OK)
 
         except Avocat.DoesNotExist:
             return Response({'error': 'Avocat not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Rdv.DoesNotExist:
+            return Response({'error': 'Rdv not found'}, status=status.HTTP_404_NOT_FOUND)
+        except ValidationError as validation_error:
+            return Response({'error': str(validation_error)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
+            logger.exception(f"Unhandled exception: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def check_availability(self, avocat_id, selected_date):
         # Get all hours that need to be checked for availability
         hours_to_check = [8, 9, 10, 11, 13, 14, 15, 16]
 
+        # Convert selected_date to a string in ISO format
+        selected_date_iso = selected_date.isoformat()
+
+        # Convert hours to strings
+        hours_to_check_str = [str(hour) for hour in hours_to_check]
+
         # Query the Rdv table for the specified avocat and date
         booked_hours = Rdv.objects.filter(
             id_avocat=avocat_id,
-            date_rdv=selected_date,
-            heure__in=hours_to_check
+            date_rdv=selected_date_iso,
+            heure__in=[datetime.time(hour) for hour in hours_to_check]
         ).values_list('heure', flat=True)
 
         # Check if all specified hours are booked
@@ -354,12 +363,19 @@ class RdvView(APIView):
     def post(self, request, avocat_id):
         try:
             # Get data from request
-            selected_date = request.data.get('selected_date')
-            selected_hour = request.data.get('selected_hour')
+            selected_date_data = request.data
+            selected_date = datetime.datetime(
+                year=selected_date_data.get('year'),
+                month=selected_date_data.get('month'),
+                day=selected_date_data.get('day'),
+                hour=int(selected_date_data.get('heure').split('.')[0]),  # Extract hour as an integer
+                minute=int(selected_date_data.get('heure').split('.')[1])  # Extract minute as an integer
+            )
+
             user_info = {
-                'tel': request.data.get('tel'),
-                'description_cas': request.data.get('description_cas'),
-                'nom_prenom': request.data.get('nom_prenom'),
+                'tel': selected_date_data.get('numero'),
+                'description_cas': selected_date_data.get('description'),
+                'nom_prenom': f"{selected_date_data.get('nom')} {selected_date_data.get('prenom')}",
             }
 
             # Check if the selected hour is available
@@ -373,8 +389,8 @@ class RdvView(APIView):
             Rdv.objects.create(
                 id_avocat=avocat_id,
                 id_user=utilisateur.id_user,
-                date_rdv=selected_date,
-                heure=selected_hour,
+                date_rdv=selected_date.date(),  # Extract date components (year, month, day)
+                heure=selected_date.hour,
                 taken=True  # Set taken to True for a booked appointment
             )
 
