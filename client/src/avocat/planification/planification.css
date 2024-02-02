@@ -32,3 +32,7 @@
     border-radius: 12px;
     background: #D9A363;
 }
+.textplan:hover{
+    background: #d9a463cc;
+    cursor: pointer;
+}

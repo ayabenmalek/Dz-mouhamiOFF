@@ -39,7 +39,29 @@ function Step3({prevStep, cv,
         });
     };
    
-        const optionsArray=['option1','option2','option3','option4','option5','option6']
+        const optionsArray= [
+            "Droit de la famille",
+            "Droit des affaires",
+            "Droit des impôts",
+            "Droit pénal",
+            "Droit de l'immigration",
+            "Droit du travail",
+            "Droit de la propriété intellectuelle",
+            "Droit de la responsabilité civile",
+            "Droit de la santé",
+            "Droit de l'environnement",
+            "Droit administratif",
+            "Droit des contrats",
+            "Droit de la construction",
+            "Droit bancaire et financier",
+            "Droit des successions",
+            "Droit des assurances",
+            "Droit de la cybercriminalité",
+            "Droit international",
+            "Droit de la propriété foncière",
+            "Droit de la technologie de l'information",
+            "Droit de la concurrence",
+                    ];
     return (
         <div className="step3-div">
             <div className="cv">

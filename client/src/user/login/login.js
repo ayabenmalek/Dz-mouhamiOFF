@@ -15,37 +15,41 @@ export default function Login() {
         // Utilisez history.push pour rediriger vers la route de signup
         navigate('/signup'); // Assurez-vous que '/signup' correspond au chemin de votre route de signup
     };
-    const [username, setusername]=('')
-    const [password, setpassword]=('')
+    const [username, setusername]=useState('')
+    const [password, setpassword]=useState('')
     const [variablebacklogin, setvariablebacklogin]=useState({
             username:{username},
             password:{password}
     })
-    // const location = useNavigate()
-    // function handleconnexion(){
-    //     axios.post('', variablebacklogin)
-    //     .then((response)=>{
-            
-    //     })
-    // }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const variablebacksignup = {
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();  // Ajoutez cette ligne
+        console.log('Before Axios call');  // Ajoutez cette ligne
+        try {
+        const response = await axios.post('http://localhost:8000/api/login', {
             username,
             password
+        },{withCredentials:true});
+        setusername(username)
+    
+        const { jwt, is_admin, username: loggedInUsername } = response.data;
+        
+    
+          // Utilisez les informations pour décider où rediriger l'utilisateur
+        if (is_admin) {
+            navigate(`/admin/Allmembers`);
             
-        };
-        const registerURL = 'http://localhost:8000/api/register';
-        axios.post(registerURL, variablebacksignup)
-        .then(response => {
-            // if(response.data === )
-            // Gérer la réponse (par exemple, rediriger l'utilisateur, afficher un message de succès, etc.)
-        })
-        .catch(error => {
-            console.error('Erreur lors de l\'enregistrement :', error);
-            console.error('Erreur lors de l\'enregistrement - Server Response:', error.response);
-        });
-        };
+        } else {
+            navigate(`/avocat`);
+        }
+        localStorage.setItem('jwt', jwt);
+        console.log(jwt)
+        } catch (error) {
+            console.error('Login error:', error);  // Ajoutez cette ligne pour afficher l'erreur
+            console.error('Login error response data:', error.response ? error.response.data : 'No response data');
+        }
+      };
+      
     console.log(variablebacklogin)
     return (
         <div className='logincontent'>
@@ -61,7 +65,7 @@ export default function Login() {
                        
                         <input type='text' placeholder="Nom d\'utilisateur"  onChange={(e) => setusername(e.target.value)}></input>
                         <input type='password' placeholder="Mot de passe" onChange={(e) => setpassword(e.target.value)}></input>
-                        <button >Connexion</button>
+                        <button type='submit'>Connexion</button>
                     </form>
                     
                     <div className='secondpart'>

@@ -3,16 +3,17 @@ import avocat from './avocat1.png'
 import './avocatcard.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function Avocatcard() {
-    const Droit =['administratif','commertial','administratif','commertial','administratif','commertial']
-    let firstname='aya';
-    let secondname='benmalek';
+export default function Avocatcard({name, adresse}) {
+    const Droit =["Droit de la famille",
+    "Droit des affaires",
+    "Droit des impôts",
+    "Droit pénal"]
     let spegen='spécialiste';
-    let Wilaya ='Bordj Bou Arréridj';
+    
     
     const navigate = useNavigate();
     const handelnavigatetoprofile = () => {
-        navigate('/user/profile');
+        navigate('/user/profile1');
     };
 
 
@@ -24,7 +25,7 @@ export default function Avocatcard() {
                 <img src={avocat} alt=''></img>
             </div>
             <div className='informations'>
-                <h2>{firstname}  {secondname}</h2>
+                <h2>{name}</h2>
                 <p>{spegen}</p>
                 
                 <div>
@@ -33,7 +34,7 @@ export default function Avocatcard() {
                 </div>
                 <div>
                     <h3 >Wilaya:</h3>
-                    <p >{Wilaya} </p>
+                    <p >{adresse} </p>
                 </div>
                 
                 

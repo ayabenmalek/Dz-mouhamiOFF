@@ -37,7 +37,7 @@ export default function Signup() {
         };
         console.log(setSelectedOptions)
         const registerURL = 'http://localhost:8000/api/register';
-        axios.post(registerURL, variablebacksignup)
+        axios.post(registerURL, variablebacksignup,{withCredentials:true})
         .then(response => {
             console.log('Enregistrement réussi :', response.data);
             // Gérer la réponse (par exemple, rediriger l'utilisateur, afficher un message de succès, etc.)

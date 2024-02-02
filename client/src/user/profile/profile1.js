@@ -8,21 +8,10 @@ import Review from './review/Review'
 import Addreview from './addreview/Addreview'
 import Localisation from './localisation/Localisation'
 import Navbar from '../../components/navavocat/Navavocat';
-import { useLocation } from 'react-router-dom'
 
-function Profile() {
-    const location = useLocation();
-    console.log(location.state.informations[0].nom)
 
-    const name = location.state.informations[0].nom;
-const adress = location.state.informations[0].address;
-const tel = location.state.informations[0].num_tel;
-const detailll = location.state.informations[0].description;
-const experiencecontent = location.state.informations[0].experience;
-const competence = location.state.informations[0].SelectedOptions;
-console.log(name,adress,tel,detailll,experiencecontent,competence)
-console.log(competence)
-
+function Profile1() {
+    
     const [diplay, setdisplay] = useState({
         experience : true,
         competence : false,
@@ -99,15 +88,19 @@ console.log(competence)
     
 
 
-
+    const competence=[ "Droit de la famille",
+        "Droit des affaires",
+        "Droit des impôts",
+        "Droit pénal"]
     // console.log(diplay);
+    const experiencecontent=' experience'
     
     return (
         <div className='profilcontainer' >
             <Navbar/>
 
             <div className="profilehaut">
-                <Profileleft name={name} adress={adress} tell={tel} detailll={detailll}/>
+                <Profileleft name='test' adress='Amizour Béjaia' tell='0696589419' detailll='Des dedtails '/>
                 <Calendrier/>
             </div>
             <div className="bascontainer">
@@ -121,8 +114,9 @@ console.log(competence)
                     </div>
                     <hr style={style} className="transition-hr" />
                     <div className="content">
-                        <Experience display = {diplay} experineccontent= {experiencecontent} />
-                        <Competence display = {diplay} competence= {competence}/>
+                        <Experience display = {diplay} experineccontent= {experiencecontent}/>
+                        <Competence display = {diplay} competence={competence} />
+                        
                         <Review display = {diplay} />
                         <Addreview display = {diplay}/>
                         <Localisation display = {diplay} />
@@ -134,4 +128,4 @@ console.log(competence)
 }
     
 
-export default Profile
+export default Profile1

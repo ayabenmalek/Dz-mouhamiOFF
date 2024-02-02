@@ -1,21 +1,22 @@
-import React from 'react'
-import './competence.css'
+import React from 'react';
+import './competence.css';
 
-function Competence({display}) {
-
-  const competences = ['Droit administratif', 'Droit administratif','Droit administratif','Droit administratif', 'Droit administratif','Droit administratif','Droit administratif', 'Droit administratif','Droit administratif']
+function Competence({ display, competence: competencee }) {
+  console.log(competencee);
 
   return (
-    <div className="competencecontainer"style={{display : display.competence? 'flex' : 'none'}}>
-      <div className='textcompetence' >
-        {competences.map((competence, index)=>(
+    <div className="competencecontainer">
+      <div className='textcompetence' style={{ display: display.competence ? 'flex' : 'none' }}>
+        {competencee && competencee.map((competenc, index) => (
           <div key={index} className="competencebuttun">
-            {competence}
+            {competenc}
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
+
+
 
 export default Competence

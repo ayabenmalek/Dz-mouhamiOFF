@@ -3,6 +3,7 @@ import './Home.css'
 import Navbar from '../../components/navavocat/Navavocat';
 import { useNavigate } from 'react-router-dom';
 import Avocatcard from '../../components/avocatcard/avocatcard';
+
 export default function Home() {
     const [selectedValuespecgen, setSelectedValuespecgen] = useState('');
     const handleChangespecgen = (event) => {
@@ -16,12 +17,85 @@ export default function Home() {
     const handleChangeactivity = (event) => {
         setSelectedValueactivity(event.target.value);
     };
-    const activityArray=['option1','option2','option3','option4','option5','option6']
-    const wilayaArray=['option1','option2','option3','option4','option5','option6']
+    const [name,setname]=useState('')
+    const handelname =(event)=>{
+        setname(event.target.value)
+    }
+    const wilayaArray=["Adrar",
+    "Chlef",
+    "Laghouat",
+    "Oum El Bouaghi",
+    "Batna",
+    "Béjaïa",
+    "Biskra",
+    "Béchar",
+    "Blida",
+    "Bouira",
+    "Tamanrasset",
+    "Tébessa",
+    "Tlemcen",
+    "Tiaret",
+    "Tizi Ouzou",
+    "Alger",
+    "Djelfa",
+    "Jijel",
+    "Sétif",
+    "Saïda",
+    "Skikda",
+    "Sidi Bel Abbès",
+    "Annaba",
+    "Guelma",
+    "Constantine",
+    "Médéa",
+    "Mostaganem",
+    "M'Sila",
+    "Mascara",
+    "Ouargla",
+    "Oran",
+    "El Bayadh",
+    "Illizi",
+    "Bordj Bou Arréridj",
+    "Boumerdès",
+    "El Tarf",
+    "Tindouf",
+    "Tissemsilt",
+    "El Oued",
+    "Khenchela",
+    "Souk Ahras",
+    "Tipaza",
+    "Mila",
+    "Aïn Defla",
+    "Naâma",
+    "Aïn Témouchent",
+    "Ghardaïa",
+    "Relizane",];
+    const activityArray = [
+        "Droit de la famille",
+        "Droit des affaires",
+        "Droit des impôts",
+        "Droit pénal",
+        "Droit de l'immigration",
+        "Droit du travail",
+        "Droit de la propriété intellectuelle",
+        "Droit de la responsabilité civile",
+        "Droit de la santé",
+        "Droit de l'environnement",
+        "Droit administratif",
+    "Droit des contrats",
+    "Droit de la construction",
+    "Droit bancaire et financier",
+    "Droit des successions",
+    "Droit des assurances",
+    "Droit de la cybercriminalité",
+    "Droit international",
+    "Droit de la propriété foncière",
+    "Droit de la technologie de l'information",
+    "Droit de la concurrence",
+    ];
 
     const navigate = useNavigate();
     const handelnavigatetoresult = () => {
-        navigate('/Result');
+        navigate('/Result', { state: { selectedValuewilaya, selectedValueactivity, name} });
     };
 
     return (
@@ -69,8 +143,8 @@ export default function Home() {
                     <div className='secondsection'>
                         <p>Si vous connaissez déja un avocat faite la recherche ici</p>
                         <div className='formm2'>
-                            <input placeholder='Nom/Prénom davocat'></input>
-                            <button>Trouver lavocat</button>
+                            <input placeholder='Nom/Prénom davocat' onChange={handelname}></input>
+                            <button onClick={handelnavigatetoresult}>Trouver lavocat</button>
                         </div>
                         
                     </div>
@@ -83,9 +157,9 @@ export default function Home() {
             </div>
             <div className='avopop'>
                 <h1>Les avocats populaires</h1>
-                <Avocatcard />
-                <Avocatcard />
-                <Avocatcard />
+                <Avocatcard name='test' adresse='Djelfa' />
+                <Avocatcard name='test' adresse='Djelfa'/>
+                <Avocatcard name='test' adresse='Djelfa' />
             </div>
             
             

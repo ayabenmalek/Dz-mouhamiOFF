@@ -53,13 +53,11 @@ function Navavocat({setlang }) {
                               return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px',color: 'white'} : {color: 'white'}
                               }} 
                             > {translations[content].appointment_planning}  </NavLink>
-                           
-                            <NavLink to= '/history'
+                            <NavLink to= '/'
                             style={({isActive})=>{
                               return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px',color: 'white' } : {color: 'white'}
                               }} 
                             >  {translations[content].logout}  </NavLink>
-                           
                           
                         </div>
                 </div>
