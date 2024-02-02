@@ -1,4 +1,5 @@
 import datetime
+import pdb
 from traceback import format_exc
 import jwt
 import logging
@@ -106,11 +107,13 @@ class AvocatView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
+        pdb.set_trace()
         response = Response()
         response.delete_cookie('jwt')
         response.data = {
             'message': 'success'
         }
+        logger.debug('Cookie deleted successfully')
         return response
 
 
