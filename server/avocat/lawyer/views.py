@@ -327,18 +327,23 @@ class SecondGetAndPostView(APIView):
             # Parse the selected_date to ensure it's a string in the format '%Y-%m-%d'
             selected_date = datetime.datetime.strptime(selected_date, '%Y-%m-%d').date()
 
-            booked_hours = Rdv.objects.filter(
+            print(f"Selected Date: {selected_date}")
+
+            booked_hours = [hour.hour for hour in Rdv.objects.filter(
                 id_avocat=avocat_id,
                 date_rdv=selected_date,
                 heure__in=[datetime.time(hour) for hour in all_hours]
-            ).values_list('heure', flat=True)
+            ).values_list('heure', flat=True)]
+
+            print(f"Booked Hours: {booked_hours}")
 
             available_hours = [hour for hour in all_hours if hour not in booked_hours]
+
+            print(f"Available Hours: {available_hours}")
 
             logger.debug(f"available_hours: {available_hours}")
 
             return Response(set(available_hours))
-
         except Exception as e:
             logger.exception("Exception in get_available_hours")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
