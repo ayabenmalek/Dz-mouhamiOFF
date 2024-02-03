@@ -20,6 +20,7 @@ const tel = location.state.informations[0].num_tel;
 const detailll = location.state.informations[0].description;
 const experiencecontent = location.state.informations[0].experience;
 const competence = location.state.informations[0].SelectedOptions;
+const avocat_id =location.state.avocat_id;
 console.log(name,adress,tel,detailll,experiencecontent,competence)
 console.log(competence)
 
@@ -108,7 +109,7 @@ console.log(competence)
 
             <div className="profilehaut">
                 <Profileleft name={name} adress={adress} tell={tel} detailll={detailll}/>
-                <Calendrier/>
+                <Calendrier avocat_id={avocat_id}/>
             </div>
             <div className="bascontainer">
                 <div className="bas">
@@ -123,8 +124,8 @@ console.log(competence)
                     <div className="content">
                         <Experience display = {diplay} experineccontent= {experiencecontent} />
                         <Competence display = {diplay} competence= {competence}/>
-                        <Review display = {diplay} />
-                        <Addreview display = {diplay}/>
+                        <Review display = {diplay} avocat_id={avocat_id}/>
+                        <Addreview display = {diplay} avocat_id={avocat_id}/>
                         <Localisation display = {diplay} />
                     </div>
                 </div>

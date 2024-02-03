@@ -30,7 +30,7 @@ let auth;
 
                         Acceuil
                 </NavLink>
-                <NavLink to="/contact"
+                <NavLink to="/user/Contact"
                     style={({isActive})=>{
                     return isActive ? {background: '#D9A363', borderRadius: '12px' } : { }
                     }}  >

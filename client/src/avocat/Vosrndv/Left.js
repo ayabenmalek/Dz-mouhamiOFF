@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './left.css'
-import { array } from './Rnvd'
 import translations from '../nav/translation/translation';
 
 
-
-
-
-
-
-function Left({ onResult, lang }) {
-  
-  
-
-
+function Left({ onResult, lang ,array}) {
 
   return (
     <div className='leftcontainer left' style={{height : (array.length > 6)? '606px' : 'fit-content'}}>
@@ -43,8 +33,8 @@ function Left({ onResult, lang }) {
                     {array.map((item, index)=>(
                         <div key={index} className='trcontainer' >
                             <div className={(index===array.length-1)? 'noborder' : 'border'}>
-                                <div className='td nom'   > {item.Nom+item.prenom} </div>
-                                <div className='td'>{item.IDclient}</div>
+                                <div className='td nom'   > {item.nom+item.prenom} </div>
+                                <div className='td'>{item.id_user}</div>
                                 <div className='td'><button onClick={()=>{onResult(index);}}>Visualiser</button></div>
                             </div>
                         </div>

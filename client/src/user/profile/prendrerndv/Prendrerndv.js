@@ -1,6 +1,17 @@
 import React from 'react'
 import './prendre.css'
-function Prendrerndv({setdate,prendre, setprendre, date}) {
+import axios from 'axios'
+function Prendrerndv({setdate,prendre, setprendre, date,avocat_id}) {
+
+    function handleprendre(){
+        axios.post(`http://localhost:8000/api/second_get_and_post/${avocat_id}/`,date)
+        .then((res)=>{
+            setprendre(false)
+            console.log('res',res)
+        })
+        .catch((err)=>console.log(err))}
+
+
   return (
     <div className='prendrerndvcontainer' style={{display : prendre? 'flex': 'none'}} >
       <div className="form">
@@ -27,7 +38,7 @@ function Prendrerndv({setdate,prendre, setprendre, date}) {
             </div>
         </div>
         <div className="confirmer">
-            <div className="buttonconfirm" onClick={()=>{setprendre(false)}}>
+            <div className="buttonconfirm" onClick={handleprendre}>
                 Prendre mon RDV
             </div>
         </div>

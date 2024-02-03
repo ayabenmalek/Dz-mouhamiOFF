@@ -7,7 +7,7 @@ import down from './pics/chevron-down.png';
 import translations from './translation/translation';
 import axios from 'axios';
 
-function Navavocat({setlang , username}) {
+function Navavocat({setlang , username,id}) {
   const [appear, setAppear] = useState(false);
   const [content, setContent] = useState('en');
 
@@ -42,9 +42,9 @@ function Navavocat({setlang , username}) {
           <NavLink to={`/avocat/?username=${username}`}  style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
             {translations[content].home}
           </NavLink>
-          <NavLink to="/avocat/contact" style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
+          {/* <NavLink to="/user/Contact" style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
             {translations[content].contact}
-          </NavLink>
+          </NavLink> */}
         </div>
 
         <div className='login'>
@@ -59,7 +59,7 @@ function Navavocat({setlang , username}) {
             <div className="hover one">
                         <div className="etoile one"></div>
                         <div className="car one">
-                            <NavLink to={`/avocat/rdv?username=${username}`} 
+                            <NavLink to={`/avocat/rdv?username=${encodeURIComponent(username)}&id=${encodeURIComponent(id)}`} 
                               style={({isActive})=>{
                                 return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px', color: 'white'} : {color: 'white'}
                                 }}  

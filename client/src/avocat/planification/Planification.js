@@ -80,6 +80,7 @@ function Planification() {
             axios.post('http://localhost:8000/api/avocatdates', date,{withCredentials:true})
                 .then(response => {
                     console.log('Enregistrement réussi :', response.data);
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('Erreur lors de l\'enregistrement :', error);

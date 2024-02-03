@@ -1,0 +1,9 @@
+.right>form>textarea{
+    width: 100%;
+    background-color: transparent;
+    border: none; /* Supprime la bordure par défaut */
+    border-bottom: 1.5px solid #D9A363; /* Ajoute une bordure en bas */
+    outline: none; 
+    padding: 12px 12px 15px 0px ;
+    color: white;
+}

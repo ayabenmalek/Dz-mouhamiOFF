@@ -32,15 +32,15 @@ export default function Login() {
         },{withCredentials:true});
         setusername(username)
     
-        const { jwt, is_admin, username: loggedInUsername } = response.data;
-        
-    
+        const { jwt,id, is_admin, username: loggedInUsername} = response.data;
+        console.log('resifid',response.data)
+        console.log('id',id)
           // Utilisez les informations pour décider où rediriger l'utilisateur
         if (is_admin) {
             navigate(`/admin/Allmembers`);
             
         } else {
-            navigate(`/avocat?username=${encodeURIComponent(username)}`);
+            navigate(`/avocat?username=${encodeURIComponent(username)}&id=${encodeURIComponent(id)}`);
         }
         localStorage.setItem('jwt', jwt);
         console.log(jwt)

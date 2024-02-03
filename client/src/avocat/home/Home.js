@@ -9,9 +9,10 @@ function Home() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const username = queryParams.get('username');
+  const id = queryParams.get('id');
   return (
     <div className='home'>
-        <Navavocat setlang={setlang} username={username}  />
+        <Navavocat setlang={setlang} username={username} id={id}  />
         <div className="titlehome">
           <h1>
           {translations[lang].bienvenue}<br /><span>{translations[lang].muhamy} </span>

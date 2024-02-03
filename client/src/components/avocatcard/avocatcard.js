@@ -21,7 +21,7 @@ export default function Avocatcard({name, adresse,avocat_id}) {
         };
     useEffect(() => {
         if (informations) {
-        navigate('/user/profile', { state: { informations: informations } });
+        navigate('/user/profile', { state: { informations: informations,avocat_id: avocat_id } });
         }
     }, [informations, navigate]);
         console.log(informations)

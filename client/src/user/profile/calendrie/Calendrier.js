@@ -3,17 +3,12 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendrier.css'
 import Prendrerndv from '../prendrerndv/Prendrerndv';
+import axios from 'axios';
 
 
 
 
-const Calendrier = () => {
-
-
-  const disabledDates = [
-    new Date('Thu Jan 25 2024 '),
-    new Date('Sun Jan 28 2024')
-  ];
+const Calendrier = ({avocat_id}) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [date, setdate] = useState({
     year: '',
@@ -31,7 +26,7 @@ const Calendrier = () => {
   // const selectedMonth = 'février'
   const isDateDisabled = (date) => {
     // Check if the date is in the disabledDates array
-    return disabledDates.some(disabledDate => (
+    return DisabledDates.some(disabledDate => (
       date.getDate() === disabledDate.getDate() &&
       date.getMonth() === disabledDate.getMonth() &&
       date.getFullYear() === disabledDate.getFullYear()
@@ -50,11 +45,11 @@ const Calendrier = () => {
     datechecked : false,
     heurechecked : false
   })
-  function handledate(){
-    if(!isDateEmpty(date)){
-      sethandle({...handle, datechecked : true})
-    }
-  }
+  // function handledate(){
+  //   if(!isDateEmpty(date)){
+  //     sethandle({...handle, datechecked : true})
+  //   }
+  // }
 
 
 const arrayback = ['08.00', '16.00']
@@ -123,6 +118,46 @@ function handletransition(){
   }
 }
 
+const [disabledDateStrings,setdisabledDateStrings]=useState([]);
+const [DisabledDates,setDisabledDates]=useState([])
+// console.log('dis',DisabledDates)
+
+const [id,setid] = useState(0) // l id iji mn la page li jiti mnha
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/first_get/${avocat_id}/`)
+    .then((res)=>{
+        
+        console.log('res',res.data)
+        setdisabledDateStrings(res.data)
+        console.log("disabledDateStrings",disabledDateStrings)
+      const parsedDates = (res.data).map((dateString) => {
+        console.log('withoutsplit',new Date(dateString))
+        return new Date(dateString);
+      });
+      console.log("parsedDates",parsedDates)
+      setDisabledDates(parsedDates);   
+    })
+    .catch((err)=>{console.log('get err',err)})
+  }, []);
+
+  const [housdisplay, sethoursdisplay] = useState([])
+  function handledate(){
+    
+    if(!isDateEmpty(date)){
+      const datecomplet = `${date.year}-${date.month}-${date.day}`;
+        console.log('datecomplet',datecomplet)
+      axios.get(`http://localhost:8000/api/second_get_and_post/${avocat_id}/${datecomplet}/`)
+      .then((res)=>{
+        console.log("res",res)
+        sethoursdisplay(res.data) // hna yethetou les heurs li rah yetafichaw donc diri had l variable hoursdisplay f plasst l hours
+        sethandle({...handle, datechecked : true})
+      })
+      
+      .catch((err)=>console.log('err',err))
+    }
+  }
+
+
 
   return (
    <div className="calendarconatiner">
@@ -151,7 +186,7 @@ function handletransition(){
 
       <div className="transition2" style={{display : handle.datechecked? 'flex' : 'none'}} >
         
-         {hours.map((hour, index) => (
+         {housdisplay.map((hour, index) => (
         <div
           key={index}
           className={`heurebutton ${selectedButtonIndex === index ? 'checked' : 'notchecked'}`}
@@ -179,7 +214,7 @@ function handletransition(){
           Selectionner la date
         </div>
       </div>
-      <Prendrerndv prendre={prendre} setdate= {setdate} setprendre={setprendre} date={date} />
+      <Prendrerndv prendre={prendre} setdate= {setdate} setprendre={setprendre} date={date} avocat_id={avocat_id} />
    </div>
   );
 };

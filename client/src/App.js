@@ -15,6 +15,7 @@ import Profile from './user/profile/Profile';
 import Profile1 from './user/profile/profile1';
 import Planification from './avocat/planification/Planification';
 import Loginadmin from './admin/loginadmin/loginadmin'
+import Contact from './user/Contact/Contact';
 
 class App extends Component {
   render() {
@@ -33,7 +34,7 @@ class App extends Component {
                     <Route path="/user/profile" element={<Profile/>} />
                     <Route path="/planification" element={<Planification/>} />
                     <Route path="/Loginadmin" element={<Loginadmin/>} />
-                    <Route path="/user/Profile1" element={<Profile1/>} />
+                    <Route path="/user/Contact" element={<Contact/>} />
             </Routes>
           
         </section>

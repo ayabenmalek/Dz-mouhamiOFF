@@ -2,43 +2,31 @@ import React, { useState } from 'react'
 import './review.css'
 import emptystart from './pics/emptystar.png'
 import fullstart from './pics/fullstart.png'
+import { useEffect } from 'react'
+import axios from 'axios'
 
-function Review({display}) {
+function Review({display,avocat_id}) {
 
-  const reviews = [
-    {
-      nom : 'Djouzi',
-      prenom : 'Nour El houda',
-      periode : 'Il y a 20 jours',
-      content: "Je suis avocat au Barreau de Paris depuis plus de 23 ans et Associé-fondateur du Cabinet d'affaires SAJET Avocats.Diplômé du MASTER 2 de droit social de l'Université Paris II Panthéon-Assas en 2000, je pratique le"
-    },
-    {
-      nom : 'Djouzi',
-      prenom : 'Nour El houda',
-      periode : 'Il y a 20 jours',
-      content: "Je suis avocat au Barreau de Paris depuis plus de 23 ans et Associé-fondateur du Cabinet d'affaires SAJET Avocats.Diplômé du MASTER 2 de droit social de l'Université Paris II Panthéon-Assas en 2000, je pratique le"
-    },
-    {
-      nom : 'Djouzi',
-      prenom : 'Nour El houda',
-      periode : 'Il y a 20 jours',
-      content: "Je suis avocat au Barreau de Paris depuis plus de 23 ans et Associé-fondateur du Cabinet d'affaires SAJET Avocats.Diplômé du MASTER 2 de droit social de l'Université Paris II Panthéon-Assas en 2000, je pratique le"
-    },
-    {
-      nom : 'Djouzi',
-      prenom : 'Nour El houda',
-      periode : 'Il y a 20 jours',
-      content: "Je suis avocat au Barreau de Paris depuis plus de 23 ans et Associé-fondateur du Cabinet d'affaires SAJET Avocats.Diplômé du MASTER 2 de droit social de l'Université Paris II Panthéon-Assas en 2000, je pratique le"
-    }
-  ]
+  const [reviews, setreviews]= useState([])
 
   const [showAll, setShowAll] = useState(false);
   const revlenght = reviews.length
-  const elements = showAll ? reviews : reviews.slice(0, 3);
+  const elements = reviews.length > 0 ? (showAll   ? reviews:  reviews.slice(0, 3)) : [];
+  console.log('isaarray',Array.isArray(reviews))
   const voirplus = () => {
     setShowAll(!showAll);
   };
 
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/review/${avocat_id}/`)
+    .then((res)=>{
+        
+        console.log('res',res.data)
+        setreviews(res.data)
+    })
+    .catch((err)=>{console.log('get err',err)})
+  }, []);
 
   return (
     <div style={{display : display.review? 'flex' : 'none'}} className='review' >
@@ -51,10 +39,10 @@ function Review({display}) {
             <div className="reviewcoor">
               <div className="coor">
                 <div className="nomreview">
-                  {review.nom} {review.prenom}
+                  {review.editeur_nom} 
                 </div>
                 <div className="date">
-                  {review.periode}
+                  {review.date_review} à {review.heure}
                 </div>
               </div>
               <div className="rate">
@@ -62,7 +50,7 @@ function Review({display}) {
               </div>
             </div>
             <div className="reviewtext">
-              {review.content}
+              {review.review_txt}
             </div>
           
           <div className="button" style={{display : (revlenght<= 2) ? 'none' : (index === elements.length - 1)? 'flex' : 'none'}} onClick={voirplus} >

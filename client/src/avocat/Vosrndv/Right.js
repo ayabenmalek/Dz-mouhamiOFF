@@ -1,12 +1,11 @@
 import React from 'react'
 import'./right.css'
-import { array } from './Rnvd'
 import translations from '../nav/translation/translation'
 
 
 
 
-function Right({id, lang}) {
+function Right({id, lang,array}) {
   return (
     <div className='leftcontainer right'>
         <div className="titlerndv" style={{    flexDirection: (lang==='ar')? 'row-reverse' : ''}}>
@@ -23,21 +22,22 @@ function Right({id, lang}) {
         <div className="infospers">
            <div className="infoscontainer">
                 <div className="leftinfos">
-                    <p>Nom : <span> {array[id].Nom} </span></p>
+                    <p>Nom : <span> {array[id].nom} </span></p>
                 </div>
                 <div className="rightinfos">
                     <p>Prénom : <span> {array[id].prenom} </span></p>
                 </div>
            </div>
            <div className="infossupp">
-                <p>Date de rendez-vous: <span>{array[id].rdv_date}</span> </p>
-                <p>L’heure de rendez-vous: <span>{array[id].Lheure_rdv}</span> </p>
+                <p>Numéro de téléphone: <span>{array[id].tel}</span> </p>
+                <p>Date de rendez-vous: <span>{array[id].date_rdv}</span> </p>
+                <p>L’heure de rendez-vous: <span>{array[id].heure}</span> </p>
                 <p className='pspecial'>Situation : </p> <br />
                 <span>
-                {array[id].Situation}
+                {array[id].description_cas}
                 </span>
                 <br />
-                <button> Supprimer</button>
+                {/* <button> Supprimer</button> */}
            </div>
         </div>
       

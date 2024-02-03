@@ -123,7 +123,7 @@ export default function Resultat() {
     return (
         <div className='result'>
                 <Navbar />
-                    <div className='research-section'>
+                    {/* <div className='research-section'>
                         <div className='firstsection'>
                             <p>si vous ne connaissez  pas un avocat spéciale, faite la recherche ici:</p>
                                 <div className='formm'>
@@ -166,7 +166,7 @@ export default function Resultat() {
                             </div>
                             
                         </div>
-                </div>
+                </div> */}
             <div className='cards'>
                 <h3>{listedavocat.length} <span> Resultats</span></h3>
                 
