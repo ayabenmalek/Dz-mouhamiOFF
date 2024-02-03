@@ -4,13 +4,16 @@ import Nav from '../nav/Navavocat'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function Planification() {
     const [lang, setlang] = useState('')
     const [disabledDates1,setDisabledDates1] = useState([])
     const [disabledDates,setDisabledDates] = useState( [])
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const username = queryParams.get('username');
     useEffect(() => {
       axios.get('http://localhost:8000/api/avocatdates', { withCredentials: true })
         .then((response) => {
@@ -91,7 +94,7 @@ function Planification() {
     
   return (
     <div className='planificationcontainer'>
-        <Nav setlang={setlang}/>
+        <Nav setlang={setlang} username={username}/>
         <div className="calcontain">
         <div className="calendarconatiner calendercontainer">
             <div className="title">

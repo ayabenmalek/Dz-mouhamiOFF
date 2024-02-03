@@ -24,30 +24,102 @@ export default function Resultat() {
     const handleChangeactivity = (event) => {
         setSelectedValueactivity1(event.target.value);
     };
-    const activityArray=['option1','option2','option3','option4','option5','option6']
-    const wilayaArray=['option1','option2','option3','option4','option5','option6']
+    const activityArray=[ "Droit de la famille",
+    "Droit des affaires",
+    "Droit des impôts",
+    "Droit pénal",
+    "Droit de l'immigration",
+    "Droit du travail",
+    "Droit de la propriété intellectuelle",
+    "Droit de la responsabilité civile",
+    "Droit de la santé",
+    "Droit de l'environnement",
+    "Droit administratif",
+    "Droit des contrats",
+    "Droit de la construction",
+    "Droit bancaire et financier",
+    "Droit des successions",
+    "Droit des assurances",
+    "Droit de la cybercriminalité",
+    "Droit international",
+    "Droit de la propriété foncière",
+    "Droit de la technologie de l'information",
+    "Droit de la concurrence"]
+    const wilayaArray=["Adrar",
+    "Chlef",
+    "Laghouat",
+    "Oum El Bouaghi",
+    "Batna",
+    "Béjaïa",
+    "Biskra",
+    "Béchar",
+    "Blida",
+    "Bouira",
+    "Tamanrasset",
+    "Tébessa",
+    "Tlemcen",
+    "Tiaret",
+    "Tizi Ouzou",
+    "Alger",
+    "Djelfa",
+    "Jijel",
+    "Sétif",
+    "Saïda",
+    "Skikda",
+    "Sidi Bel Abbès",
+    "Annaba",
+    "Guelma",
+    "Constantine",
+    "Médéa",
+    "Mostaganem",
+    "M'Sila",
+    "Mascara",
+    "Ouargla",
+    "Oran",
+    "El Bayadh",
+    "Illizi",
+    "Bordj Bou Arréridj",
+    "Boumerdès",
+    "El Tarf",
+    "Tindouf",
+    "Tissemsilt",
+    "El Oued",
+    "Khenchela",
+    "Souk Ahras",
+    "Tipaza",
+    "Mila",
+    "Aïn Defla",
+    "Naâma",
+    "Aïn Témouchent",
+    "Ghardaïa",
+    "Relizane"]
 
     
     
     const [listedavocat,setlistesavocat]=useState([])
-    // useEffect(() => {
-    //     const requestData ={
-    //         wilaya,
-    //         option,
-    //         name
-    //     }
-    //     axios.post(`http://localhost:8000/api/filter`, requestData, { withCredentials: true })
-    //       .then((response) => {
-    //         setlistesavocat(response.data);
-    //         console.log('list',listedavocat);
-    //       })
-    //       .catch((err) => {
-    //         console.log('ere', err);
-    //         console.log('ere', err.response);
-    //       });
-    //   },   [wilaya, option, name]); // Ajoutez les dépendances ici
-    // console.log(location.state)
+    useEffect(() => {
+        const requestData ={
+            wilaya,
+            option,
+            name
+        }
+        axios.post(`http://localhost:8000/api/filter`, requestData, { withCredentials: true })
+          .then((response) => {
+            setlistesavocat(response.data.filtered_data);
+            
+            console.log('listaxios',response.data.filtered_data);
+            
+            // console.log(typeof(response.data.filtered_data))
+            // console.log(Array.isArray(response.data.filtered_data));
+          })
+          .catch((err) => {
+            console.log('ere', err);
+            console.log('ere', err.response);
+          });
+      },   [wilaya, option, name]); // Ajoutez les dépendances ici
+    // console.log("selectedvalues",location.state)
     // console.log(wilaya,option,name)
+    console.log('list',listedavocat);
     return (
         <div className='result'>
                 <Navbar />
@@ -96,18 +168,13 @@ export default function Resultat() {
                         </div>
                 </div>
             <div className='cards'>
-                <h3>03 <span> Resultats</span></h3>
+                <h3>{listedavocat.length} <span> Resultats</span></h3>
                 
-                <Avocatcard name='test' adresse='Amizour Béjaia'
-                
-                /> 
-                <Avocatcard name='aymen' adresse='Boumerdes'
-                
-                /> 
-                <Avocatcard name='test' adresse='Djelfa'
-                
-                /> 
-            
+                {listedavocat.map((avocat) => (
+                    <div key={avocat.avocat_id}>
+                        <Avocatcard name={avocat.nom} adresse={avocat.adressar} avocat_id={avocat.avocat_id}/> 
+                    </div>
+                ))}
                 
             </div>
         </div>
