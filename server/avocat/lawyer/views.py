@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Avocat, Admin, Rdv, Utilisateur
-from .serializers import AvocatSerializer, ReviewSerializer
+from .models import Avocat, Admin, Rdv, Utilisateur, Review
+from .serializers import AvocatSerializer, ReviewSerializer, RdvSerializer, UtilisateurSerializer
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
@@ -261,6 +261,24 @@ class FilterView(APIView):
 
 
 class ReviewCreateView(APIView):
+    def get(self, request, avocat_id):
+        try:
+            if not Review.objects.filter(id_avocat=avocat_id).exists():
+                return Response({'message': 'No reviews for the specified avocat_id'}, status=status.HTTP_200_OK)
+
+            reviews = Review.objects.filter(id_avocat=avocat_id)
+
+            serializer = ReviewSerializer(reviews, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except Review.DoesNotExist:
+            return Response({'error': 'Reviews not found for the specified avocat_id'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     def post(self, request, avocat_id):
         try:
             avocat = Avocat.objects.get(avocat_id=avocat_id)
@@ -403,3 +421,48 @@ class AvailabilityChecker:
 
         # Return True if available, False otherwise
         return not all_hours_booked
+
+
+class AvocatRdvInfoView(APIView):
+    def get(self, request, avocat_id):
+        try:
+            # Retrieve Rdvs for the specified avocat_id
+            rdvs = Rdv.objects.filter(id_avocat=avocat_id)
+
+            # Serialize Rdvs
+            rdv_serializer = RdvSerializer(rdvs, many=True)
+
+            # Retrieve User information for each Rdv
+            users = Utilisateur.objects.filter(id_user__in=[rdv.id_user.id_user for rdv in rdvs])
+
+            # Serialize User information
+            user_serializer = UtilisateurSerializer(users, many=True)
+
+            # Combine Rdv and User information with nom and prenom separated
+            result = []
+            for rdv_data, user_data in zip(rdv_serializer.data, user_serializer.data):
+                result.append({
+                    'id_rdv': rdv_data['id_rdv'],
+                    'date_rdv': rdv_data['date_rdv'],
+                    'heure': rdv_data['heure'],
+                    'taken': rdv_data['taken'],
+                    'id_avocat': rdv_data['id_avocat'],
+                    'id_user': rdv_data['id_user'],
+                    'tel': user_data['tel'],
+                    'description_cas': user_data['description_cas'],
+                    'nom': user_data['nom_prenom'].split(' ')[0],
+                    'prenom': user_data['nom_prenom'].split(' ')[1],
+                })
+
+            return Response(result, status=status.HTTP_200_OK)
+
+        except Rdv.DoesNotExist:
+            return Response({'error': 'Rdvs not found for the specified avocat_id'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Utilisateur.DoesNotExist:
+            return Response({'error': 'Users not found for the specified avocat_id'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

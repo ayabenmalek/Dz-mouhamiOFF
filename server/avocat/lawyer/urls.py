@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import RegisterView, LoginView, AvocatView, LogoutView, AvocatDatesView, AdminView, FilterView, \
-    ReviewCreateView, FirstGetView, SecondGetAndPostView
+    ReviewCreateView, FirstGetView, SecondGetAndPostView, AvocatRdvInfoView
 
 urlpatterns = [
     path('register', RegisterView.as_view()),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('first_get/<int:avocat_id>/', FirstGetView.as_view()),
     path('second_get_and_post/<int:avocat_id>/<str:selected_date>/', SecondGetAndPostView.as_view()),
     path('second_get_and_post/<int:avocat_id>/', SecondGetAndPostView.as_view()),
+    path('avocat_rdv/<int:avocat_id>/', AvocatRdvInfoView.as_view()),
 ]
