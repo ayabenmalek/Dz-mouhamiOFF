@@ -5,6 +5,8 @@ import './Rndv.css'
 import Navavocat from '../nav/Navavocat'
 // import { array } from './Left'
 import translations from '../nav/translation/translation'
+import { useLocation } from 'react-router-dom'
+
 
 export  const  array =[
     {
@@ -178,6 +180,9 @@ export  const  array =[
     },    ]
 
 function Rnvd() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const username = queryParams.get('username');
     const [lang, setlang] = useState('en')
     console.log(lang);
     const [resultFromLeft, setResultFromLeft] = useState('0');
@@ -190,7 +195,7 @@ function Rnvd() {
 
   return (
     <div className="cont">
-        <Navavocat setlang={setlang}/>
+        <Navavocat setlang={setlang} username={username}/>
         { (array.length > 0) ?
         <div className='rndvcontainer' style={{ flexDirection: (lang==='ar')? 'row-reverse' : ''}}>
             

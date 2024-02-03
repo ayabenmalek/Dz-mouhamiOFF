@@ -40,7 +40,7 @@ export default function Login() {
             navigate(`/admin/Allmembers`);
             
         } else {
-            navigate(`/avocat`);
+            navigate(`/avocat?username=${encodeURIComponent(username)}`);
         }
         localStorage.setItem('jwt', jwt);
         console.log(jwt)
@@ -51,6 +51,7 @@ export default function Login() {
       };
       
     console.log(variablebacklogin)
+    console.log('username',username)
     return (
         <div className='logincontent'>
             <div className='login-title'>

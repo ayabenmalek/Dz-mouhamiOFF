@@ -137,8 +137,13 @@ background-color: black;
     text-align: center;
     margin: 20px 10%  ;
 }
-@media only screen  and (max-width: 800px) {
+@media only screen  and (max-width: 1000px) {
     .homecontent>.header>.research-section>.firstsection>.formm {
         flex-wrap: wrap;
+    }
+  }
+@media only screen  and (max-width: 700px) {
+    .apropos{
+        margin-top: 150px;
     }
   }

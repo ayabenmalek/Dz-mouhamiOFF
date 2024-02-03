@@ -157,9 +157,9 @@ export default function Home() {
             </div>
             <div className='avopop'>
                 <h1>Les avocats populaires</h1>
-                <Avocatcard name='test' adresse='Djelfa' />
-                <Avocatcard name='test' adresse='Djelfa'/>
-                <Avocatcard name='test' adresse='Djelfa' />
+                <Avocatcard name='ayabenmalek' adresse='Djelfa' avocat_id='3' />
+                <Avocatcard name='houda' adresse='Djelfa' avocat_id='4'/>
+                <Avocatcard name='lyne' adresse='Djelfa' avocat_id='5' />
             </div>
             
             

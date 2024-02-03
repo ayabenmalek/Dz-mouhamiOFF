@@ -5,13 +5,30 @@ import './navavocat.css';
 import logo from './pics/logo.png';
 import down from './pics/chevron-down.png';
 import translations from './translation/translation';
+import axios from 'axios';
 
-function Navavocat({setlang }) {
+function Navavocat({setlang , username}) {
   const [appear, setAppear] = useState(false);
   const [content, setContent] = useState('en');
 
-  const username = "aya ben malek";
+  // const username = "aya ben malek";
   setlang(content)
+
+
+  // link
+  const handleLogout = async () => {
+    try {
+      // Effectuez une requête POST vers votre endpoint de déconnexion en utilisant Axios.
+      const response = await axios.post(`http://localhost:8000/api/logout`);
+      console.log('response',response)
+
+      // Vérifiez la réponse et effectuez d'autres actions si nécessaire.
+
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion : ', error);
+      console.log('Une erreur s\'est produite lors de la déconnexion.');
+    }
+  };
   return (
     <nav>
       <div className="logo">
@@ -22,7 +39,7 @@ function Navavocat({setlang }) {
 
       <div className="generallinks">
         <div className='links'>
-          <NavLink to="/avocat/" style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
+          <NavLink to={`/avocat/?username=${username}`}  style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
             {translations[content].home}
           </NavLink>
           <NavLink to="/avocat/contact" style={({ isActive }) => isActive ? { background: '#D9A363', borderRadius: '20px' } : { }}>
@@ -42,18 +59,18 @@ function Navavocat({setlang }) {
             <div className="hover one">
                         <div className="etoile one"></div>
                         <div className="car one">
-                            <NavLink to="/avocat/rdv"
+                            <NavLink to={`/avocat/rdv?username=${username}`} 
                               style={({isActive})=>{
                                 return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px', color: 'white'} : {color: 'white'}
                                 }}  
                             >
                             {translations[content].appointments} </NavLink>
-                            <NavLink to='/planification' 
-                            style={({isActive})=>{
+                            <NavLink to={`/planification?username=${username}`} 
+                            style={({isActive})=>{  
                               return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px',color: 'white'} : {color: 'white'}
                               }} 
                             > {translations[content].appointment_planning}  </NavLink>
-                            <NavLink to= '/'
+                            <NavLink to= '/' onClick={handleLogout}
                             style={({isActive})=>{
                               return isActive ? {backgroundColor: '#D9A363', borderRadius: '20px',color: 'white' } : {color: 'white'}
                               }} 

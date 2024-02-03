@@ -4,9 +4,10 @@ import Step2 from'../../components/signupstep2/Step2'
 import Step3 from'../../components/signupstep3/Step3'
 import google from '../login/Frame 50.png'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 export default function Signup() {
 
-
+    const navigate =useNavigate()
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -40,6 +41,7 @@ export default function Signup() {
         axios.post(registerURL, variablebacksignup,{withCredentials:true})
         .then(response => {
             console.log('Enregistrement réussi :', response.data);
+            navigate(`/avocat?username=${encodeURIComponent(username)}`);
             // Gérer la réponse (par exemple, rediriger l'utilisateur, afficher un message de succès, etc.)
         })
         .catch(error => {
